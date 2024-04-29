@@ -3,13 +3,15 @@ package vue;
 import javafx.scene.paint.Color;
 
 public interface ConstantesCanvas {
-    Color COULEUR_GRILLE = Color.BLUE;
+    Color COULEUR_GRILLE = Color.BLACK;
+    Color COULEUR_APPRENTI = Color.RED;
+    Color [] COULEUR_TEMPLE = {Color.GREEN, Color.PINK, Color.ORANGE, Color.VIOLET, Color.BLUE, Color.YELLOW, Color.BROWN};
+    Color [] COULEUR_CRISTAL = {Color.GREEN, Color.PINK, Color.ORANGE, Color.VIOLET, Color.BLUE, Color.YELLOW, Color.BROWN};
     int LARGEUR_CANVAS = 600;
-    int HAUTEUR_CANVAS = 700;
+    int HAUTEUR_CANVAS = 600;
     int CARRE = 30;
     int LARGEUR_OVALE = 19;
     int HAUTEUR_OVALE = 19;
-    Color COULEUR_APPRENTI = Color.RED;
 
 
 }
