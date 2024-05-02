@@ -6,19 +6,22 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import modele.ExceptionApprentiOrdonnateur;
 import modele.Position;
+import modele.Temples;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class VBoxRoot extends VBox implements ConstantesCanvas{
     private Label labelNombreDePas;
     private Canvas canvasCarte;
     private GraphicsContext graphicsContext2D;
     private Position positionApprenti;
+    private TreeMap<Position, TreeSet<Integer>> mapTemples;
 
-    public VBoxRoot() {
+    public VBoxRoot() throws FileNotFoundException, ExceptionApprentiOrdonnateur {
 //        l'étiquette qui affiche le nombre de pas
         labelNombreDePas = new Label("Nombre de pas : 0");
 
@@ -49,6 +52,20 @@ public class VBoxRoot extends VBox implements ConstantesCanvas{
             graphicsContext2D.fillText(Integer.toString(numLigne), CARRE/3, i+CARRE/2);
             numLigne++;
         }
+
+//        Position Temple
+        mapTemples = new Temples().getMapAttributs();
+//        vue du dico
+//        Set <Map.Entry<Position, TreeSet<Integer>>> vueMapTemples = mapTemples.entrySet();
+
+        ArrayList<Position> keyList = new ArrayList<>(mapTemples.keySet());//        }
+        Iterator<Position> iterateur =  keyList.iterator();
+        while (iterateur.hasNext()) {
+            Position posiTemple = iterateur.next();
+            graphicsContext2D.setFill(COULEUR_TEMPLE[mapTemples.get(posiTemple).first()]);
+            graphicsContext2D.fillRect(posiTemple.getAbscisse()*CARRE+1, posiTemple.getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
+        }
+
 
 //        Position apprenti
         positionApprenti = new Position(1, 1);

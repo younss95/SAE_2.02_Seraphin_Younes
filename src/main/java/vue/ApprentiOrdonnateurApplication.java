@@ -4,11 +4,13 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modele.ExceptionApprentiOrdonnateur;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class ApprentiOrdonnateurApplication extends Application {
-    public void start(Stage stage) {
+    public void start(Stage stage) throws FileNotFoundException, ExceptionApprentiOrdonnateur {
         VBox root = new VBoxRoot();
         Scene scene = new Scene(root, 1000, 920);
 //        File[] fichiersCss = new File("css").listFiles();
