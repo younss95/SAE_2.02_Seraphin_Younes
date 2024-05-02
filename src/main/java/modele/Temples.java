@@ -14,10 +14,21 @@ public class Temples implements Comparable{
         Scanner scanner = new Scanner(new File("data" + File.separator + "scenario.txt")).useDelimiter(",");
 
         while(scanner.hasNext()) {
-            int abscisse = scanner.nextInt();
-            int ordonne = scanner.nextInt();
-            int coulTemp = scanner.nextInt();
-            int coulCrist = scanner.nextInt();
+            int abscisse;
+            int ordonne;
+            int coulTemp;
+            int coulCrist;
+
+            String abscisseStr = scanner.next();
+            String ordonneStr = scanner.next();
+            String coulTempStr = scanner.next();
+            String coulCristStr = scanner.next();
+
+            if (abscisseStr.contains("\n")) {
+                abscisse = Integer.parseInt(abscisseStr.replace("\n", ""));
+            }
+
+//            System.out.println(chMapAttributs);
 
             TreeSet<Integer> setAttributs = new TreeSet<>();
 
@@ -25,9 +36,11 @@ public class Temples implements Comparable{
                 setAttributs.add(coulTemp);
                 setAttributs.add(coulCrist);
             }
+            System.out.println(setAttributs);
 
             if (abscisse > 0 && ordonne > 0) {
                 Position posiTemp = new Position(abscisse, ordonne);
+                System.out.println(posiTemp);
                 chMapAttributs.put(posiTemp,setAttributs);
             }
         }
