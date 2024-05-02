@@ -80,7 +80,7 @@ public class VBoxRoot extends VBox implements ConstantesCanvas{
 //        Placement des temples sur la map
         for (Temple temple :listTemple) {
             graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
-            graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+16, temple.getPosiTemple().getAbscisse()*CARRE+16, CARRE-2, CARRE-2);
+            graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
         }
         System.out.println(listTemple);
 
@@ -88,7 +88,7 @@ public class VBoxRoot extends VBox implements ConstantesCanvas{
         positionApprenti = new Position(1, 1);
         graphicsContext2D.setFill(COULEUR_APPRENTI);
         graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE + 1 + CARRE/8,
-                positionApprenti.getOrdonnee()*CARRE + CARRE/4, LARGEUR_OVALE, HAUTEUR_OVALE);
+                positionApprenti.getOrdonnee()*CARRE + CARRE/4, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
 
         canvasCarte.setOnMouseClicked(event -> {
         int abscisse = (int) event.getX() / CARRE;
@@ -125,7 +125,7 @@ public class VBoxRoot extends VBox implements ConstantesCanvas{
                 for (Temple temple : listTemple) {
                     if (positionApprenti.equals(temple.getPosiTemple())) {
                         graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
-                        graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+16, temple.getPosiTemple().getAbscisse()*CARRE+16, CARRE-2, CARRE-2);
+                        graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
                         break;
                     }
                 }
@@ -137,7 +137,7 @@ public class VBoxRoot extends VBox implements ConstantesCanvas{
                 ImageView en_mouv = new ImageView(imagePersonnage);
 
 //                dessin du perso sur la nouvelle position
-                graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE + 1 + CARRE / 8, positionApprenti.getOrdonnee() * CARRE + CARRE / 4, LARGEUR_OVALE, HAUTEUR_OVALE);
+                graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE + 1 + CARRE / 8, positionApprenti.getOrdonnee() * CARRE + CARRE / 4, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
                 if (positionApprenti.equals(positionCliquee)) {
                     timer.cancel();
                 }
