@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 public class ApprentiOrdonnateurApplication extends Application {
     public void start(Stage stage) throws FileNotFoundException, ExceptionApprentiOrdonnateur {
         VBox root = new VBoxRoot();
-        Scene scene = new Scene(root, 1000, 920);
+        Scene scene = new Scene(root, 875, 925);
 //        File[] fichiersCss = new File("css").listFiles();
 //        for (File fichier : fichiersCss) {
 //            scene.getStylesheets().add(fichier.toURI().toString());
