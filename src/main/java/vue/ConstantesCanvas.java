@@ -10,8 +10,8 @@ public interface ConstantesCanvas {
     int LARGEUR_CANVAS = 800;
     int HAUTEUR_CANVAS = 800;
     int CARRE = 25;
-    int LARGEUR_OVALE = 19;
-    int HAUTEUR_OVALE = 19;
+    int LARGEUR_IMAGE_APP = 20;
+    int HAUTEUR_IMAGE_APP = 20;
 
 
 }
