@@ -6,11 +6,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import modele.ExceptionApprentiOrdonnateur;
 import modele.Position;
-import modele.Temples;
+import modele.Temple;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -19,7 +21,9 @@ public class VBoxRoot extends VBox implements ConstantesCanvas{
     private Canvas canvasCarte;
     private GraphicsContext graphicsContext2D;
     private Position positionApprenti;
-    private TreeMap<Position, TreeSet<Integer>> mapTemples;
+
+//    private Image imagePersonnage;
+    private ArrayList<Temple> listTemple = new ArrayList<>();
 
     public VBoxRoot() throws FileNotFoundException, ExceptionApprentiOrdonnateur {
 //        l'étiquette qui affiche le nombre de pas
@@ -39,33 +43,46 @@ public class VBoxRoot extends VBox implements ConstantesCanvas{
             }
         }
 //        les numéros de colonne
-        int numCol = 0;
+        int numCol = -15;
         graphicsContext2D.setFill(COULEUR_GRILLE);
         for (int i = CARRE; i < LARGEUR_CANVAS; i += CARRE) {
             graphicsContext2D.fillText(Integer.toString(numCol), i+CARRE/3, CARRE/2);
             numCol++;
         }
 //        les numuméros de ligne
-        int numLigne = 0;
+        int numLigne = -15;
         graphicsContext2D.setFill(COULEUR_GRILLE);
         for (int i = CARRE; i < HAUTEUR_CANVAS; i += CARRE) {
             graphicsContext2D.fillText(Integer.toString(numLigne), CARRE/3, i+CARRE/2);
             numLigne++;
         }
 
-//        Position Temple
-        mapTemples = new Temples().getMapAttributs();
-//        vue du dico
-//        Set <Map.Entry<Position, TreeSet<Integer>>> vueMapTemples = mapTemples.entrySet();
+//        Lecture fichier
+        Scanner scanner = new Scanner(new File("data" + File.separator + "scenario.txt")).useDelimiter(",");
+        while(scanner.hasNext()) {
+            int abscisse = scanner.nextInt();
+            int ordonne = scanner.nextInt();
+            int coulTemp = scanner.nextInt();
+            int coulCrist = scanner.nextInt();
 
-        ArrayList<Position> keyList = new ArrayList<>(mapTemples.keySet());//        }
-        Iterator<Position> iterateur =  keyList.iterator();
-        while (iterateur.hasNext()) {
-            Position posiTemple = iterateur.next();
-            graphicsContext2D.setFill(COULEUR_TEMPLE[mapTemples.get(posiTemple).first()]);
-            graphicsContext2D.fillRect(posiTemple.getAbscisse()*CARRE+1, posiTemple.getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
+            if (coulTemp >= 0 && coulCrist >= 0) {
+                Position posiTemple = new Position(abscisse, ordonne);
+                Temple temple = new Temple(posiTemple, coulTemp, coulCrist);
+                System.out.println(temple);
+                listTemple.add(temple);
+            }
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
         }
+        System.out.println(listTemple);
 
+//        Placement des temples sur la map
+        for (Temple temple :listTemple) {
+            graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
+            graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+16, temple.getPosiTemple().getAbscisse()*CARRE+16, CARRE-2, CARRE-2);
+        }
+        System.out.println(listTemple);
 
 //        Position apprenti
         positionApprenti = new Position(1, 1);
@@ -99,9 +116,28 @@ public class VBoxRoot extends VBox implements ConstantesCanvas{
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
+//                ordoImp.setImage(null);
+
+//                Effacer le personnage de la case
                 graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE+2, positionApprenti.getOrdonnee() * CARRE+2, CARRE-3, CARRE-3);
+
+//                redessiner le temple sur la position effacée
+                for (Temple temple : listTemple) {
+                    if (positionApprenti.equals(temple.getPosiTemple())) {
+                        graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
+                        graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+16, temple.getPosiTemple().getAbscisse()*CARRE+16, CARRE-2, CARRE-2);
+                        break;
+                    }
+                }
+//                System.out.println(listTemple);
+
+//                deplacement du personnage
+                Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\TP-SAE\\Image\\ApprentiImage.png");
                 positionApprenti.deplacementUneCase(positionCliquee);
-                graphicsContext2D.fillOval(positionApprenti.getAbscisse() * CARRE + 1 + CARRE / 8, positionApprenti.getOrdonnee() * CARRE + CARRE / 4, LARGEUR_OVALE, HAUTEUR_OVALE);
+                ImageView en_mouv = new ImageView(imagePersonnage);
+
+//                dessin du perso sur la nouvelle position
+                graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE + 1 + CARRE / 8, positionApprenti.getOrdonnee() * CARRE + CARRE / 4, LARGEUR_OVALE, HAUTEUR_OVALE);
                 if (positionApprenti.equals(positionCliquee)) {
                     timer.cancel();
                 }
