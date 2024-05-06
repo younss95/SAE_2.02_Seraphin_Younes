@@ -7,4 +7,6 @@ module com.example.tpsae {
     opens com.example.tpsae to javafx.fxml;
     exports com.example.tpsae;
     exports vue;
+    exports modele;
+    exports Controleur;
 }
