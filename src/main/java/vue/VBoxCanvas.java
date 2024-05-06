@@ -8,32 +8,30 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import modele.ApprentiOrdonnateur;
 import modele.ExceptionApprentiOrdonnateur;
 import modele.Position;
 import modele.Temple;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class VBoxCanva extends VBox implements ConstantesCanvas{
+public class VBoxCanvas extends VBox implements ConstantesCanvas{
     private Label labelNombreDePas;
     private Canvas canvasCarte;
     private GraphicsContext graphicsContext2D;
     private Position positionApprenti;
 
     //    private Image imagePersonnage;
-    private ArrayList<Temple> listTemple = new ArrayList<>();
+    private Collection<Temple> listTemple = new ArrayList<>();
 
-    public VBoxCanva() throws FileNotFoundException, ExceptionApprentiOrdonnateur {
+    public VBoxCanvas() throws FileNotFoundException, ExceptionApprentiOrdonnateur {
 
 //        l'étiquette qui affiche le nombre de pas
         labelNombreDePas = new Label("Nombre de pas : 0");
 
 //        création de l'image du perso
-        Image ordoImport = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\TP-SAE\\Image\\ApprentiImage.png");
+        Image ordoImport = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
         ImageView imageView = new ImageView(ordoImport);
         imageView.setFitWidth(LARGEUR_IMAGE_APP);
         imageView.setFitHeight(HAUTEUR_IMAGE_APP);
@@ -65,39 +63,23 @@ public class VBoxCanva extends VBox implements ConstantesCanvas{
             graphicsContext2D.fillText(Integer.toString(numLigne), CARRE/3, i+CARRE/2);
             numLigne++;
         }
-
-////        Lecture fichier
-//        Scanner scanner = new Scanner(new File("data" + File.separator + "scenario.txt")).useDelimiter(",");
-//        while(scanner.hasNext()) {
-//            int abscisse = scanner.nextInt();
-//            int ordonne = scanner.nextInt();
-//            int coulTemp = scanner.nextInt();
-//            int coulCrist = scanner.nextInt();
-//
-//            if (coulTemp >= 0 && coulCrist >= 0) {
-//                Position posiTemple = new Position(abscisse, ordonne);
-//                Temple temple = new Temple(posiTemple, coulTemp, coulCrist);
-//                System.out.println(temple);
-//                listTemple.add(temple);
-//            }
-//            if (scanner.hasNextLine()) {
-//                scanner.nextLine();
-//            }
-//        }
-//        System.out.println(listTemple);
-
+        System.out.println(listTemple);
 //        Placement des temples sur la map
-        for (Temple temple :listTemple) {
-            graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
-            graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
-        }
+
+
         System.out.println(listTemple);
 
 //        Position apprenti
-        positionApprenti = new Position(1, 1);
-        graphicsContext2D.setFill(COULEUR_APPRENTI);
-        graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE + 1 + CARRE/8,
-                positionApprenti.getOrdonnee()*CARRE + CARRE/4, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+        positionApprenti = ApprentiOrdonnateur.getPositionApprenti();
+        Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+        ImageView apprenti = new ImageView(imagePersonnage);
+        graphicsContext2D.drawImage(apprenti.getImage(), positionApprenti.getAbscisse() * CARRE + 1 + CARRE / 8, positionApprenti.getOrdonnee() * CARRE + CARRE / 4, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+
+
+//        affichage d'un rond pour représenter l'apprenti
+//        graphicsContext2D.setFill(COULEUR_APPRENTI);
+//        graphicsContext2D.fillOval(positionApprenti.getAbscisse()*CARRE + 1 + CARRE/8,
+//                positionApprenti.getOrdonnee()*CARRE + CARRE/4, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
 
         canvasCarte.setOnMouseClicked(event -> {
             int abscisse = (int) event.getX() / CARRE;
@@ -149,7 +131,7 @@ public class VBoxCanva extends VBox implements ConstantesCanvas{
 //                System.out.println(listTemple);
 
 //                deplacement du personnage
-                Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\TP-SAE\\Image\\ApprentiImage.png");
+                Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
                 positionApprenti.deplacementUneCase(positionCliquee);
                 ImageView en_mouv = new ImageView(imagePersonnage);
 
@@ -166,5 +148,15 @@ public class VBoxCanva extends VBox implements ConstantesCanvas{
         };
         timer.scheduleAtFixedRate(timerTask, 1000, 200);
 
+    }
+
+    public void setTemples(Collection<Temple> temples) {
+        listTemple = temples;
+        for (Temple temple :listTemple) {
+            graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
+            graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
+            graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulCristal()]);
+            graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
+        }
     }
 }
