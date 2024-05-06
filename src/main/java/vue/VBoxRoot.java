@@ -1,32 +1,22 @@
 package vue;
 
 import Controleur.Controleur;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import modele.ApprentiOrdonnateur;
 import modele.ExceptionApprentiOrdonnateur;
-import modele.Position;
-import modele.Temple;
-import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
 
 public class VBoxRoot extends VBox implements ConstantesCanvas {
     private static ApprentiOrdonnateur apprenti;
     private static Controleur controleur;
-    private static VBoxCanva canva;
+    private static VBoxCanvas canvas;
 
     public VBoxRoot() {
         apprenti = new ApprentiOrdonnateur();
@@ -50,10 +40,11 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
             menuScenario.getItems().add(menuItem);
         }
         try {
-            canva = new VBoxCanva();
+            canvas = new VBoxCanvas();
         } catch (FileNotFoundException | ExceptionApprentiOrdonnateur e) {
             throw new RuntimeException(e);
         }
+        this.getChildren().add(canvas);
     }
 
     public static ApprentiOrdonnateur getApprenti() {
@@ -61,4 +52,7 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
     }
 
 
+    public static VBoxCanvas getCanvas() {
+        return canvas;
+    }
 }
