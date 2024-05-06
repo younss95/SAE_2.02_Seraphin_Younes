@@ -21,6 +21,7 @@ public class Controleur implements EventHandler {
             File scenario = fichierScenario;
             Collection<Temple> temples = LectureScenario.lecture(fichierScenario);
             VBoxRoot.getApprenti().setTemples(temples);
+            VBoxRoot.getCanvas().setTemples(temples);
             System.out.println(VBoxRoot.getApprenti());
         }
     }
