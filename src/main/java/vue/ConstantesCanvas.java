@@ -3,6 +3,7 @@ package vue;
 import javafx.scene.paint.Color;
 
 public interface ConstantesCanvas {
+    String INTITULE_MENU_SCENARIOS = "Scénario";
     Color COULEUR_GRILLE = Color.BLACK;
     Color COULEUR_APPRENTI = Color.RED;
     Color [] COULEUR_TEMPLE = {Color.GREEN, Color.PINK, Color.ORANGE, Color.VIOLET, Color.BLUE, Color.YELLOW, Color.BROWN};
