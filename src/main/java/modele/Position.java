@@ -70,7 +70,10 @@ public class Position implements Comparable {
     }
 
     public String toString() {
-        return "(" + abscisse + ", " + ordonnee + ")";
+        String abscisseStr = String.valueOf(abscisse-16);
+        String ordonneeStr = String.valueOf(ordonnee-16);
+
+        return "(" + abscisseStr + ", " + ordonneeStr + ")";
     }
 
 
