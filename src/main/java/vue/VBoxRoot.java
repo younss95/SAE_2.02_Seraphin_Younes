@@ -2,13 +2,13 @@ package vue;
 
 import Controleur.Controleur;
 import javafx.geometry.Insets;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import modele.ApprentiOrdonnateur;
 import modele.ExceptionApprentiOrdonnateur;
+import modele.Temple;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,10 +17,12 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
     private static ApprentiOrdonnateur apprenti;
     private static Controleur controleur;
     private static VBoxCanvas canvas;
+    private static GridPaneInformation gridPaneInfo;
 
     public VBoxRoot() {
         apprenti = new ApprentiOrdonnateur();
         controleur = new Controleur();
+        gridPaneInfo = new GridPaneInformation();
 
 //        la barre des menus
         MenuBar menuBar = new MenuBar();
@@ -39,6 +41,9 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
             menuItem.setOnAction(controleur);
             menuScenario.getItems().add(menuItem);
         }
+
+        this.getChildren().add(gridPaneInfo);
+
         try {
             canvas = new VBoxCanvas();
         } catch (FileNotFoundException | ExceptionApprentiOrdonnateur e) {
@@ -51,7 +56,9 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
         return apprenti;
     }
 
-
+    public static Controleur getControleur() {
+        return controleur;
+    }
     public static VBoxCanvas getCanvas() {
         return canvas;
     }
