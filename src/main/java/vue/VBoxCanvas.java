@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import modele.ApprentiOrdonnateur;
 import modele.ExceptionApprentiOrdonnateur;
 import modele.Position;
@@ -73,7 +74,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         positionApprenti = ApprentiOrdonnateur.getPositionApprenti();
         Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
         ImageView apprenti = new ImageView(imagePersonnage);
-        graphicsContext2D.drawImage(apprenti.getImage(), positionApprenti.getAbscisse() * CARRE + 1 + CARRE / 8, positionApprenti.getOrdonnee() * CARRE + CARRE / 4, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+        graphicsContext2D.drawImage(apprenti.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
 
 
 //        affichage d'un rond pour représenter l'apprenti
@@ -85,7 +86,9 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
             int abscisse = (int) event.getX() / CARRE;
             int ordonnee = (int) event.getY() / CARRE;
             Position positionCliquee = new Position(abscisse, ordonnee);
-            graphicsContext2D.fillRect(abscisse*CARRE+1, ordonnee*CARRE+1, CARRE-2, CARRE-2);
+//            colorie la case selectionnée
+            graphicsContext2D.setStroke(Color.RED);
+            graphicsContext2D.strokeRect(abscisse*CARRE, ordonnee*CARRE, CARRE, CARRE);
             System.out.println(positionCliquee);
             deplacementAvecTimer(positionCliquee, positionApprenti);
         });
@@ -115,48 +118,70 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-//                ordoImp.setImage(null);
+                int absCliquee = positionCliquee.getAbscisse();
+                int ordCliquee = positionCliquee.getOrdonnee();
 
-//                Effacer le personnage de la case
-                graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE+2, positionApprenti.getOrdonnee() * CARRE+2, CARRE-3, CARRE-3);
+                // Vérifier si la position cliquée est sur les numéros de ligne ou de colonne
+                if (absCliquee == 0 || ordCliquee == 0) {
+                    System.out.println("deplacement impossible");
+                    graphicsContext2D.setStroke(Color.BLACK);
+                    graphicsContext2D.strokeRect(positionCliquee.getAbscisse() * CARRE, positionCliquee.getOrdonnee() * CARRE, CARRE, CARRE);
 
-//                redessiner le temple sur la position effacée
+                    // Ignorer le déplacement
+                    timer.cancel();
+                    return;
+                }
+
+                // Effacer le personnage de la case
+                graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 2, positionApprenti.getOrdonnee() * CARRE + 2, CARRE - 3, CARRE - 3);
+                graphicsContext2D.setStroke(Color.BLACK);
+                graphicsContext2D.strokeRect(positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, CARRE, CARRE);
+
+                // Redessiner le temple sur la position effacée
                 for (Temple temple : listTemple) {
                     if (positionApprenti.equals(temple.getPosiTemple())) {
                         graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
-                        graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
+                        graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse() * CARRE + 1, temple.getPosiTemple().getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2);
                         break;
                     }
                 }
-//                System.out.println(listTemple);
 
-//                deplacement du personnage
+                // Déplacement du personnage
                 Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
                 positionApprenti.deplacementUneCase(positionCliquee);
                 ImageView en_mouv = new ImageView(imagePersonnage);
 
-//                dessin du perso sur la nouvelle position
-                graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE + 1 + CARRE / 8, positionApprenti.getOrdonnee() * CARRE + CARRE / 4, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+                // Dessin du personnage sur la nouvelle position
+                graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+
+                // Si le déplacement est valide et que le personnage a atteint la position cliquée,
+                // arrêtez le timer et mettez à jour le nombre de pas.
                 if (positionApprenti.equals(positionCliquee)) {
                     timer.cancel();
+                    Platform.runLater(() -> {
+                        labelNombreDePas.setText("Nombre de pas : " + Position.getNombreDePas());
+                    });
                 }
-
-                Platform.runLater(() -> {
-                    labelNombreDePas.setText("Nombre de pas : " + Position.getNombreDePas());
-                });
             }
         };
-        timer.scheduleAtFixedRate(timerTask, 1000, 200);
 
+        // Planifier le timerTask pour exécution
+        timer.scheduleAtFixedRate(timerTask, 1000, 200);
     }
 
     public void setTemples(Collection<Temple> temples) {
+//        supression des temples pré-existant (lors chgmt de scénario)
+        for (Temple temple : listTemple) {
+            graphicsContext2D.clearRect(temple.getPosiTemple().getAbscisse() * CARRE+2, temple.getPosiTemple().getOrdonnee() * CARRE+2, CARRE-3, CARRE-3);
+        }
+//        affichage des nouveaux temples sur le canvas
         listTemple = temples;
         for (Temple temple :listTemple) {
             graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
             graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
             graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulCristal()]);
             graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
+
         }
     }
 }
