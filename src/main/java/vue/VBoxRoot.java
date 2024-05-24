@@ -17,12 +17,10 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
     private static ApprentiOrdonnateur apprenti;
     private static Controleur controleur;
     private static VBoxCanvas canvas;
-    private static GridPaneInformation gridPaneInfo;
 
     public VBoxRoot() {
         apprenti = new ApprentiOrdonnateur();
         controleur = new Controleur();
-        gridPaneInfo = new GridPaneInformation();
 
 //        la barre des menus
         MenuBar menuBar = new MenuBar();
@@ -41,8 +39,6 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
             menuItem.setOnAction(controleur);
             menuScenario.getItems().add(menuItem);
         }
-
-        this.getChildren().add(gridPaneInfo);
 
         try {
             canvas = new VBoxCanvas();
