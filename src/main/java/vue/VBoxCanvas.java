@@ -32,7 +32,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         labelNombreDePas = new Label("Nombre de pas : 0");
 
 //        création de l'image du perso
-        Image ordoImport = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+        Image ordoImport = new Image("D:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
         ImageView imageView = new ImageView(ordoImport);
         imageView.setFitWidth(LARGEUR_IMAGE_APP);
         imageView.setFitHeight(HAUTEUR_IMAGE_APP);
@@ -72,7 +72,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
 
 //        Position apprenti
         positionApprenti = ApprentiOrdonnateur.getPositionApprenti();
-        Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+        Image imagePersonnage = new Image("D:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
         ImageView apprenti = new ImageView(imagePersonnage);
         graphicsContext2D.drawImage(apprenti.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
 
@@ -94,8 +94,6 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         });
 
 //        ajout des composants graphiques à la racine (this)
-        this.getChildren().add(labelNombreDePas);
-        VBox.setMargin(labelNombreDePas, new Insets(30));
         this.getChildren().add(canvasCarte);
         VBox.setMargin(canvasCarte, new Insets(30));
 
@@ -147,7 +145,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
                 }
 
                 // Déplacement du personnage
-                Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+                Image imagePersonnage = new Image("D:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
                 positionApprenti.deplacementUneCase(positionCliquee);
                 ImageView en_mouv = new ImageView(imagePersonnage);
 
@@ -179,9 +177,13 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         for (Temple temple :listTemple) {
             graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
             graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
-            graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulCristal()]);
+            graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCristal().getCoulCristal()]);
             graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
 
         }
+    }
+
+    public Label getLabelNombreDePas() {
+        return labelNombreDePas;
     }
 }
