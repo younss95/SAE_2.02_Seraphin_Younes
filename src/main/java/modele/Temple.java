@@ -3,12 +3,16 @@ package modele;
 public class Temple{
     private Position posiTemple;
     private int coulTemple;
-    private int coulCristal;
+    private static Cristal cristal;
 
-    public Temple(Position parPosition, Integer parCoulTemple, Integer parCoulCristal) {
+    public Temple(Position parPosition, Integer parCoulTemple, Cristal parCristal) {
         posiTemple = parPosition;
         coulTemple = parCoulTemple;
-        coulCristal = parCoulCristal;
+        cristal = parCristal;
+    }
+
+    public static Cristal getCristal() {
+        return cristal;
     }
 
     public Position getPosiTemple() {
@@ -19,11 +23,11 @@ public class Temple{
         return coulTemple;
     }
 
-    public int getCoulCristal() {
-        return coulCristal;
+    public void setCristal(Cristal parCristal) {
+        cristal = parCristal;
     }
 
     public String toString() {
-        return "{Posi : " + posiTemple + " ; CoulTemple : " + coulTemple + " ; CoulCristal : " + coulCristal + "}";
+        return "{Posi : " + posiTemple + " ; CoulTemple : " + coulTemple + " ; Cristal : " + cristal + "}";
     }
 }

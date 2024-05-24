@@ -1,5 +1,6 @@
 package vue;
 
+import modele.Cristal;
 import modele.Position;
 import modele.Temple;
 
@@ -24,9 +25,10 @@ public class LectureScenario implements ConstantesCanvas{
                 int posX = scanner.nextInt() + LARGEUR_CANVAS/(2*CARRE);
                 int posY = scanner.nextInt() + HAUTEUR_CANVAS/(2*CARRE);
 
-                int couleur = scanner.nextInt();
-                int cristal = scanner.nextInt();
-                temple = new Temple(new Position(posX, posY), couleur, cristal);
+                int coulTemp = scanner.nextInt();
+                int coulCrist = scanner.nextInt();
+                Cristal cristal = new Cristal(new Position(posX, posY), coulCrist);
+                temple = new Temple(new Position(posX, posY), coulTemp, cristal);
                 templesDuScenario.add(temple);
             }
             scanner.close();

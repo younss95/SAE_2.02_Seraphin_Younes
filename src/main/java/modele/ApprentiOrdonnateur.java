@@ -9,11 +9,11 @@ import java.util.Collection;
 public class ApprentiOrdonnateur implements ConstantesCanvas {
     private static Position positionApprenti;
     private Collection<Temple> listTemples = new ArrayList<>();
-    private static Color coulCrsital;
+    private static Cristal cristal;
 
     public ApprentiOrdonnateur(){
         positionApprenti = new Position((LARGEUR_CANVAS/CARRE)/2, (HAUTEUR_CANVAS/CARRE)/2);
-        coulCrsital = null;
+        cristal = null;
     }
 
     public void echange() {
@@ -37,11 +37,15 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         return listTemples;
     }
 
-    public Color getCoulCristal() {
-        return coulCrsital;
-    }
-
     public String toString(){
         return "La position de l'apprenti : " + positionApprenti + " " + listTemples;
+    }
+
+    public static Cristal getCristal() {
+        return cristal;
+    }
+
+    public void setCristal(Cristal parCristal) {
+        cristal = parCristal;
     }
 }
