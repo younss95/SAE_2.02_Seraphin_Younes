@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 
+/**
+ * La classe LectureScenario permet de lire un fichier contenant un scénario de temples
+ * et de retourner une collection des temples à réaligner.
+ */
 public class LectureScenario implements ConstantesCanvas{
     /**
      * la méthode de lecture prend en parametre un fichier contenant un scénario
