@@ -2,6 +2,7 @@ package modele;
 
 import javafx.scene.paint.Color;
 
+/** CLASSE POUR LE CRISTAL */
 public class Cristal {
 
 //    private static Position posiCristal;
@@ -20,6 +21,7 @@ public class Cristal {
         return coulCristal;
     }
 
+    /** setteur pour définir la couleur du cristal */
     public void setCoulCristal(int parCoulCristal) {
         coulCristal = parCoulCristal;
     }
