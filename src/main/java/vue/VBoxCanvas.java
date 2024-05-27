@@ -20,7 +20,6 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
     private GraphicsContext graphicsContext2D;
     private Position positionApprenti;
 
-    //    private Image imagePersonnage;
     private Collection<Temple> listTemple = new ArrayList<>();
 
     public VBoxCanvas() throws FileNotFoundException, ExceptionApprentiOrdonnateur {
@@ -29,10 +28,11 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         labelNombreDePas = new Label("Nombre de pas : 0");
 
 //        création de l'image du perso
-        Image ordoImport = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
-        ImageView imageView = new ImageView(ordoImport);
-        imageView.setFitWidth(LARGEUR_IMAGE_APP);
-        imageView.setFitHeight(HAUTEUR_IMAGE_APP);
+
+        Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+        ImageView imageMag = new ImageView(imagePersonnage);
+        imageMag.setFitWidth(LARGEUR_IMAGE_APP);
+        imageMag.setFitHeight(HAUTEUR_IMAGE_APP);
 
 //        le Canvas et son contexte graphique
         canvasCarte = new Canvas();
@@ -69,9 +69,9 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
 
 //        Position apprenti
         positionApprenti = ApprentiOrdonnateur.getPositionApprenti();
-        Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
-        ImageView apprenti = new ImageView(imagePersonnage);
-        graphicsContext2D.drawImage(apprenti.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+//        imagePersonnage = new Image("F:\SAE\SAE 2.02 Exploration algorithmique\ApprentiOrdonnateur\SAE_2.02_Seraphin_Younes\Image\Sticker_Magicien.PNG");
+//        ImageView imageMag = new ImageView(imagePersonnage);
+        graphicsContext2D.drawImage(imageMag.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
 
 
 //        affichage d'un rond pour représenter l'apprenti
@@ -148,10 +148,10 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
                 // Déplacement du personnage
                 Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
                 positionApprenti.deplacementUneCase(positionCliquee);
-                ImageView en_mouv = new ImageView(imagePersonnage);
+                ImageView imageMag = new ImageView(imagePersonnage);
 
                 // Dessin du personnage sur la nouvelle position
-                graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+                graphicsContext2D.drawImage(imageMag.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
 
                 // Si le déplacement est valide et que le personnage a atteint la position cliquée,
                 // arrêtez le timer et mettez à jour le nombre de pas.
@@ -174,8 +174,8 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
             graphicsContext2D.clearRect(temple.getPosiTemple().getAbscisse() * CARRE+2, temple.getPosiTemple().getOrdonnee() * CARRE+2, CARRE-3, CARRE-3);
             if (positionApprenti.equals(temple.getPosiTemple())) {
                 Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
-                ImageView en_mouv = new ImageView(imagePersonnage);
-                graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+                ImageView imageMag = new ImageView(imagePersonnage);
+                graphicsContext2D.drawImage(imageMag.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
             }
         }
 //        affichage des nouveaux temples sur le canvas
@@ -203,10 +203,26 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
                 graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
                 if (positionApprenti.equals(temple.getPosiTemple())) {
                     Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
-                    ImageView en_mouv = new ImageView(imagePersonnage);
-                    graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+                    ImageView imageMag = new ImageView(imagePersonnage);
+                    graphicsContext2D.drawImage(imageMag.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
                 }
             }
         }
+    }
+
+    public void updateNbPas() {
+        Position.setNombreDePasInit();
+        labelNombreDePas.setText("Nombre de pas : " + Position.getNombreDePas());
+    }
+
+    public void updateApprenti() {
+        graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 2, positionApprenti.getOrdonnee() * CARRE + 2, CARRE - 3, CARRE - 3);
+        graphicsContext2D.setStroke(Color.BLACK);
+        graphicsContext2D.strokeRect(positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, CARRE, CARRE);
+        ApprentiOrdonnateur.setPositionApprenti(new Position((LARGEUR_CANVAS/CARRE)/2, (HAUTEUR_CANVAS/CARRE)/2));
+        positionApprenti = ApprentiOrdonnateur.getPositionApprenti();
+        Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+        ImageView imageMag = new ImageView(imagePersonnage);
+        graphicsContext2D.drawImage(imageMag.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
     }
 }
