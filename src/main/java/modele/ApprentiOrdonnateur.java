@@ -26,7 +26,7 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         listTemples = temples;
     }
 
-    public void setPositionApprenti(Position parPosition) {
+    public static void setPositionApprenti(Position parPosition) {
         positionApprenti = parPosition;
     }
 //    Les accesseurs
