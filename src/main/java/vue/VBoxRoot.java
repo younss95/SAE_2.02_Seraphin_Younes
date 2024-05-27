@@ -13,6 +13,7 @@ import modele.Temple;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+
 public class VBoxRoot extends VBox implements ConstantesCanvas {
     private static ApprentiOrdonnateur apprenti;
     private static Controleur controleur;
