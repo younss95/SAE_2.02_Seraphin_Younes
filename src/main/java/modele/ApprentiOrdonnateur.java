@@ -9,16 +9,16 @@ import java.util.Collection;
 public class ApprentiOrdonnateur implements ConstantesCanvas {
     private static Position positionApprenti;
     private Collection<Temple> listTemples = new ArrayList<>();
-    private static Cristal cristal;
+    private Cristal cristal;
 
     public ApprentiOrdonnateur(){
         positionApprenti = new Position((LARGEUR_CANVAS/CARRE)/2, (HAUTEUR_CANVAS/CARRE)/2);
-        cristal = null;
+        cristal = new Cristal(0);
     }
 
-    public void echange() {
-
-    }
+//    public void echange() {
+//
+//    }
 
 
 //    Les trucs
@@ -41,11 +41,11 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         return "La position de l'apprenti : " + positionApprenti + " " + listTemples;
     }
 
-    public static Cristal getCristal() {
+    public Cristal getCristal() {
         return cristal;
     }
 
-    public void setCristal(Cristal parCristal) {
-        cristal = parCristal;
+    public void setCoulCristal(Integer parCoulCristal) {
+        cristal.setCoulCristal(parCoulCristal);
     }
 }
