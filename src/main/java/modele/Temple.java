@@ -1,7 +1,11 @@
 package modele;
 
+/** CLASSE POUR LE TEMPLE*/
 public class Temple{
+    /** champ pour la position du temple */
     private Position posiTemple;
+
+    /** champ pour la couleur du temple*/
     private int coulTemple;
     private static Cristal cristal;
 
@@ -15,14 +19,17 @@ public class Temple{
         return cristal;
     }
 
+    /** accesseur qui retourne la position du temple */
     public Position getPosiTemple() {
         return posiTemple;
     }
 
+    /** accesseur qui retourne la couleur du temple */
     public int getCoulTemple() {
         return coulTemple;
     }
 
+    /** setteur qui defini le cristal */
     public void setCristal(Cristal parCristal) {
         cristal = parCristal;
     }
