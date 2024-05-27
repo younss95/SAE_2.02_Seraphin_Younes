@@ -7,15 +7,26 @@ public class Temple{
 
     /** champ pour la couleur du temple*/
     private int coulTemple;
-    private static Cristal cristal;
 
+    /** champ pour le cristal */
+    private Cristal cristal;
+
+    /**
+     * constructeur qui initialise le temple en lui donnant ses caracteristiques
+     * sa position, sa couleur et le cristal
+     * @param parPosition
+     * @param parCoulTemple
+     * @param parCristal
+     */
     public Temple(Position parPosition, Integer parCoulTemple, Cristal parCristal) {
         posiTemple = parPosition;
         coulTemple = parCoulTemple;
         cristal = parCristal;
     }
 
-    public static Cristal getCristal() {
+
+    /** accesseur qui retourne le cristal */
+    public Cristal getCristal() {
         return cristal;
     }
 
@@ -34,6 +45,12 @@ public class Temple{
         cristal = parCristal;
     }
 
+    /** setteur qui defini la couleur du cristal */
+    public void setCoulCristal(Integer parCoulCristal) {
+        cristal.setCoulCristal(parCoulCristal);
+     }
+
+    /** méthode toString qui donne comme information sur le temple : sa position, sa couleur et son cristal */
     public String toString() {
         return "{Posi : " + posiTemple + " ; CoulTemple : " + coulTemple + " ; Cristal : " + cristal + "}";
     }
