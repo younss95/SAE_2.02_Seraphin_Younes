@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import modele.*;
 import vue.ConstantesCanvas;
 import vue.LectureScenario;
+import vue.VBoxCanvas;
 import vue.VBoxRoot;
 
 import java.io.File;
@@ -28,6 +29,9 @@ public class Controleur implements EventHandler, ConstantesCanvas {
                 VBoxRoot.getApprenti().setTemples(temples);
                 VBoxRoot.getCanvas().setTemples(temples);
                 System.out.println(VBoxRoot.getApprenti());
+                VBoxRoot.getCanvas().updateNbPas();
+                VBoxRoot.getApprenti().setPositionApprenti(new Position(0,0));
+                VBoxRoot.getCanvas().updateApprenti();
 //                System.out.println(VBoxRoot.getApprenti().getListTemples());
             }
         }
