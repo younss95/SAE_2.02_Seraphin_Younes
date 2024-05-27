@@ -24,10 +24,11 @@ public class Controleur implements EventHandler, ConstantesCanvas {
                 System.out.println(fichierScenario.getName());
                 File scenario = fichierScenario;
                 Collection<Temple> temples = LectureScenario.lecture(fichierScenario);
+//                System.out.println(temples);
                 VBoxRoot.getApprenti().setTemples(temples);
                 VBoxRoot.getCanvas().setTemples(temples);
                 System.out.println(VBoxRoot.getApprenti());
-                System.out.println(VBoxRoot.getApprenti().getListTemples());
+//                System.out.println(VBoxRoot.getApprenti().getListTemples());
             }
         }
 
@@ -79,26 +80,31 @@ public class Controleur implements EventHandler, ConstantesCanvas {
                 }
 
                 // S'assurer que le temple a été trouvé
-                assert templeApprenti != null;
+                if (templeApprenti == null) {
+                    System.out.println("Temple non trouvé à la position de l'apprenti.");
+                    return;
+                }
 
                 // Récupérer la couleur du cristal du temple
-                Cristal cristalTemple = Temple.getCristal();
+                Cristal cristalTemple = templeApprenti.getCristal();
 
                 // Afficher les couleurs avant l'échange
-                System.out.println("Avant l'échange :");
+                System.out.println("Avant l'echange :");
                 System.out.println("Couleur Cristal Apprenti : " + COULEUR_CRISTAL[cristalApp.getCoulCristal()]);
                 System.out.println("Couleur Cristal Temple : " + COULEUR_CRISTAL[cristalTemple.getCoulCristal()]);
 
                 // Échanger les couleurs
-                apprenti.setCristal(cristalTemple);
-                templeApprenti.setCristal(cristalAppTmps);
+                int tempCouleur = cristalApp.getCoulCristal();
+                cristalApp.setCoulCristal(cristalTemple.getCoulCristal());
+                cristalTemple.setCoulCristal(tempCouleur);
 
                 // Afficher les couleurs après l'échange
-                System.out.println("Après l'échange :");
+                System.out.println("Apres l'echange :");
                 System.out.println("Couleur Cristal Apprenti : " + COULEUR_CRISTAL[cristalApp.getCoulCristal()]);
                 System.out.println("Couleur Cristal Temple : " + COULEUR_CRISTAL[cristalTemple.getCoulCristal()]);
 
-//                System.out.println("Cristal échangé");
+                System.out.println("Cristal echange");
+                VBoxRoot.getCanvas().updateTemple(templeApprenti.getPosiTemple(), cristalTemple);
             }
         }
 
