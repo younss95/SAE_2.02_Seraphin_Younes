@@ -1,15 +1,23 @@
 package modele;
 
+/** CLASSE QUI DONNE LA POSITION DE L'APPRENTI */
 public class Position implements Comparable {
+    /** champ pour les nombres de pas de l'apprenti */
     private static int nombreDePas = 0;
+
+    /** champ abscisse*/
     private int abscisse;
+
+    /** champ ordonnee*/
     private int ordonnee;
 
+    /** crée une instance de la classe Position en donnant une abcsisse et une ordonnée*/
     public Position(int abscisse, int ordonnee) {
         this.abscisse = abscisse;
         this.ordonnee = ordonnee;
     }
 
+    /** accesseur qui retourne le nombre de pas*/
     public static int getNombreDePas() {
         return nombreDePas;
     }
@@ -40,6 +48,11 @@ public class Position implements Comparable {
         }
     }
 
+    /**
+     * la methode equals retourne
+     * @param parPosition
+     * @return
+     */
     public boolean equals(Position parPosition) {
         return this.abscisse == parPosition.abscisse && this.ordonnee == parPosition.ordonnee;
     }
