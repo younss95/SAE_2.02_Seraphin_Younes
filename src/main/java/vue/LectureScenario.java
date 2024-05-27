@@ -31,7 +31,7 @@ public class LectureScenario implements ConstantesCanvas{
 
                 int coulTemp = scanner.nextInt();
                 int coulCrist = scanner.nextInt();
-                Cristal cristal = new Cristal(new Position(posX, posY), coulCrist);
+                Cristal cristal = new Cristal(coulCrist);
                 temple = new Temple(new Position(posX, posY), coulTemp, cristal);
                 templesDuScenario.add(temple);
             }
