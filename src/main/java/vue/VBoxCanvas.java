@@ -9,10 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import modele.ApprentiOrdonnateur;
-import modele.ExceptionApprentiOrdonnateur;
-import modele.Position;
-import modele.Temple;
+import modele.*;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -32,7 +29,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         labelNombreDePas = new Label("Nombre de pas : 0");
 
 //        création de l'image du perso
-        Image ordoImport = new Image("D:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+        Image ordoImport = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
         ImageView imageView = new ImageView(ordoImport);
         imageView.setFitWidth(LARGEUR_IMAGE_APP);
         imageView.setFitHeight(HAUTEUR_IMAGE_APP);
@@ -72,7 +69,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
 
 //        Position apprenti
         positionApprenti = ApprentiOrdonnateur.getPositionApprenti();
-        Image imagePersonnage = new Image("D:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+        Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
         ImageView apprenti = new ImageView(imagePersonnage);
         graphicsContext2D.drawImage(apprenti.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
 
@@ -140,12 +137,16 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
                     if (positionApprenti.equals(temple.getPosiTemple())) {
                         graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
                         graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse() * CARRE + 1, temple.getPosiTemple().getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2);
+
+                        //  Redessiner le cristal du temple
+                        graphicsContext2D.setFill(COULEUR_CRISTAL[temple.getCristal().getCoulCristal()]);
+                        graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
                         break;
                     }
                 }
 
                 // Déplacement du personnage
-                Image imagePersonnage = new Image("D:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+                Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
                 positionApprenti.deplacementUneCase(positionCliquee);
                 ImageView en_mouv = new ImageView(imagePersonnage);
 
@@ -171,13 +172,18 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
 //        supression des temples pré-existant (lors chgmt de scénario)
         for (Temple temple : listTemple) {
             graphicsContext2D.clearRect(temple.getPosiTemple().getAbscisse() * CARRE+2, temple.getPosiTemple().getOrdonnee() * CARRE+2, CARRE-3, CARRE-3);
+            if (positionApprenti.equals(temple.getPosiTemple())) {
+                Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+                ImageView en_mouv = new ImageView(imagePersonnage);
+                graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+            }
         }
 //        affichage des nouveaux temples sur le canvas
         listTemple = temples;
         for (Temple temple :listTemple) {
             graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
             graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
-            graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCristal().getCoulCristal()]);
+            graphicsContext2D.setFill(COULEUR_CRISTAL[temple.getCristal().getCoulCristal()]);
             graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
 
         }
@@ -185,5 +191,22 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
 
     public Label getLabelNombreDePas() {
         return labelNombreDePas;
+    }
+
+    public void updateTemple(Position parPosiTemple, Cristal parCristal) {
+        for (Temple temple : listTemple) {
+            if (temple.getPosiTemple().equals(parPosiTemple)) {
+                temple.setCristal(parCristal);
+                graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
+                graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
+                graphicsContext2D.setFill(COULEUR_CRISTAL[temple.getCristal().getCoulCristal()]);
+                graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
+                if (positionApprenti.equals(temple.getPosiTemple())) {
+                    Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+                    ImageView en_mouv = new ImageView(imagePersonnage);
+                    graphicsContext2D.drawImage(en_mouv.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+                }
+            }
+        }
     }
 }
