@@ -6,10 +6,16 @@ import javafx.scene.paint.Color;
 public class Cristal {
 
 //    private static Position posiCristal;
-    private static int coulCristal;
+    /** la couleur du cristal*/
+    private int coulCristal;
 
-    public Cristal(Position parPosition, Integer parCoulCristal){
+//    public Cristal(Position parPosition, Integer parCoulCristal){
 //        posiCristal = parPosition;
+//        coulCristal = parCoulCristal;
+//    }
+
+    /** constructeur de la classe qui initialise la couleur du cristal*/
+    public Cristal(Integer parCoulCristal){
         coulCristal = parCoulCristal;
     }
 
@@ -17,7 +23,9 @@ public class Cristal {
 //        return posiCristal;
 //    }
 
-    public static int getCoulCristal() {
+
+    /** accesseur pour obtenir la couleur du cristal */
+    public int getCoulCristal() {
         return coulCristal;
     }
 
@@ -29,4 +37,9 @@ public class Cristal {
 //    public void setPosiCristal(Position parPosiCristal) {
 //        posiCristal = parPosiCristal;
 //    }
+
+    /** méthode toString qui retourne une représentationn du cristal */
+    public String toString() {
+        return "Couleur du cristal : " + coulCristal;
+    }
 }
