@@ -22,6 +22,10 @@ public class Position implements Comparable {
         return nombreDePas;
     }
 
+    public static void setNombreDePasInit() {
+        nombreDePas = 0;
+    }
+
     /**
      * la méthode deplacementUneCase déplace la position this d'une case
      * pour la rapprocher de celle du paramètre parPosition
