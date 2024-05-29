@@ -1,18 +1,16 @@
-package Controleur;
+package controleur;
 
+import algorithme.AlgoTri;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
-import javafx.scene.paint.Color;
 import modele.*;
 import vue.ConstantesCanvas;
 import vue.LectureScenario;
-import vue.VBoxCanvas;
 import vue.VBoxRoot;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Collection;
 
 public class Controleur implements EventHandler, ConstantesCanvas {
@@ -66,7 +64,7 @@ public class Controleur implements EventHandler, ConstantesCanvas {
 
 //        Object userData = ();
         if (event.getSource() instanceof Button bouton) {
-            if (bouton.getUserData() instanceof String) {
+            if (bouton.getText().equals("Échanger Cristal")) {
 
                 // Récupérer l'apprenti et sa couleur de cristal actuelle
                 ApprentiOrdonnateur apprenti = VBoxRoot.getApprenti();
@@ -109,6 +107,9 @@ public class Controleur implements EventHandler, ConstantesCanvas {
 
                 System.out.println("Cristal echange");
                 VBoxRoot.getCanvas().updateTemple(templeApprenti.getPosiTemple(), cristalTemple);
+            }
+            if (bouton.getText().equals("Algo Tri")) {
+                AlgoTri algoTri = new AlgoTri();
             }
         }
 

@@ -19,13 +19,20 @@ public class VBoxAction extends VBox {
         Label labelNombrePas = VBoxRoot.getCanvas().getLabelNombreDePas();
         Label labelEchangeCrsit = new Label("Échangez un cristal");
         Button boutonEchange = new Button("Échanger Cristal");
-        boutonEchange.setUserData("Échanger Cristal");
+//        boutonEchange.setUserData("Échanger Cristal");
 
         // Ajouter un écouteur d'événement pour le bouton
         boutonEchange.setOnAction(VBoxRoot.getControleur());
 
         // Ajouter les composants à la VBox
         this.getChildren().addAll(topSpace, labelNombrePas, labelEchangeCrsit, boutonEchange);
+
+        Button boutonTri = new Button("Tri");
+//        boutonTri.setUserData("Algo Tri");
+
+        boutonTri.setOnAction(VBoxRoot.getControleur());
+
+        this.getChildren().add(boutonTri);
 
         // Ajouter du padding et de l'espacement pour l'esthétique
         this.setPadding(new Insets(10));
