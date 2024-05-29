@@ -48,4 +48,40 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
     public void setCoulCristal(Integer parCoulCristal) {
         cristal.setCoulCristal(parCoulCristal);
     }
+
+    public void echangeCristal() {
+        Temple templeApprenti = null;
+        for (Temple temple : this.getListTemples()) {
+            if (temple.getPosiTemple().equals(positionApprenti)) {
+                templeApprenti = temple;
+//                        break;
+            }
+        }
+
+        // S'assurer que le temple a été trouvé
+        if (templeApprenti == null) {
+            System.out.println("Temple non trouvé à la position de l'apprenti.");
+            return;
+        }
+
+        // Récupérer la couleur du cristal du temple
+        Cristal cristalTemple = templeApprenti.getCristal();
+
+        // Afficher les couleurs avant l'échange
+        System.out.println("Avant l'echange :");
+        System.out.println("Couleur Cristal Apprenti : " + COULEUR_CRISTAL[cristal.getCoulCristal()]);
+        System.out.println("Couleur Cristal Temple : " + COULEUR_CRISTAL[cristalTemple.getCoulCristal()]);
+
+        // Échanger les couleurs
+        int tempCouleur = cristal.getCoulCristal();
+        cristal.setCoulCristal(cristalTemple.getCoulCristal());
+        cristalTemple.setCoulCristal(tempCouleur);
+
+        // Afficher les couleurs après l'échange
+        System.out.println("Apres l'echange :");
+        System.out.println("Couleur Cristal Apprenti : " + COULEUR_CRISTAL[cristal.getCoulCristal()]);
+        System.out.println("Couleur Cristal Temple : " + COULEUR_CRISTAL[cristalTemple.getCoulCristal()]);
+
+        System.out.println("Cristal echange");
+    }
 }
