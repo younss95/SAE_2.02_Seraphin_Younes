@@ -8,5 +8,6 @@ module com.example.tpsae {
     exports com.example.tpsae;
     exports vue;
     exports modele;
-    exports Controleur;
+    exports controleur;
+    exports algorithme;
 }
