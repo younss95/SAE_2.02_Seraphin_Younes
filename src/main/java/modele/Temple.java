@@ -50,6 +50,13 @@ public class Temple{
         cristal.setCoulCristal(parCoulCristal);
      }
 
+
+    /** la méthode equals compare la couleur du temple (this) avec la couleur en paramètre*/
+    public boolean equalsCoul(int parCouleur) {
+        return this.getCoulTemple() == parCouleur;
+    }
+
+
     /** méthode toString qui donne comme information sur le temple : sa position, sa couleur et son cristal */
     public String toString() {
         return "{Posi : " + posiTemple + " ; CoulTemple : " + coulTemple + " ; Cristal : " + cristal + "}";

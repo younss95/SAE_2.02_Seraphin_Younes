@@ -38,6 +38,11 @@ public class Cristal {
 //        posiCristal = parPosiCristal;
 //    }
 
+    /** la méthode equals compare la couleur du cristal (this) avec la couleur en paramètre*/
+    public boolean equalsCoul(int parCouleur) {
+        return this.getCoulCristal() == parCouleur;
+    }
+
     /** méthode toString qui retourne une représentationn du cristal */
     public String toString() {
         return "Couleur du cristal : " + coulCristal;
