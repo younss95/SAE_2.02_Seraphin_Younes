@@ -1,6 +1,6 @@
 package vue;
 
-import Controleur.Controleur;
+import controleur.Controleur;
 import javafx.geometry.Insets;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -8,7 +8,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import modele.ApprentiOrdonnateur;
 import modele.ExceptionApprentiOrdonnateur;
-import modele.Temple;
 
 import java.io.File;
 import java.io.FileNotFoundException;
