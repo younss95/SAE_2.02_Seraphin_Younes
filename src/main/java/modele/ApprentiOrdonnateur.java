@@ -49,6 +49,13 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         cristal.setCoulCristal(parCoulCristal);
     }
 
+    /**
+     * Échange le cristal de l'apprenti avec celui du temple où il se trouve actuellement.
+     *
+     * Cette méthode vérifie d'abord si l'apprenti se trouve dans un temple. Si c'est le cas,
+     * elle échange les couleurs des cristaux de l'apprenti et du temple, puis affiche les couleurs
+     * avant et après l'échange.
+     */
     public void echangeCristal() {
         Temple templeApprenti = null;
         for (Temple temple : this.getListTemples()) {
@@ -84,4 +91,5 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
 
         System.out.println("Cristal echange");
     }
+
 }
