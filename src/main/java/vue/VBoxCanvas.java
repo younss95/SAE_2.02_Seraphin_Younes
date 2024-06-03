@@ -14,12 +14,37 @@ import modele.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class VBoxCanvas extends VBox implements ConstantesCanvas{
+
+/** LA CLASSE VBOXCANVAS QUI HERITE DE VBOX ET IMPLEMENTE L'INTERFACE CONSTANTESCANVAS
+ * */
+public class VBoxCanvas extends VBox implements ConstantesCanvas {
+
+    /**
+     * ce champ de type label qui affiche le nombres de pas
+     */
     private Label labelNombreDePas;
+
+    /**
+     * ce champ de type canvas permet de creer la grille du jeu
+     */
     private Canvas canvasCarte;
+
+    /**
+     * ce champ de type graphicsContext permet de créer les elements 2D comme les carrés pour les grilles du jeu
+     */
     private GraphicsContext graphicsContext2D;
+
+    /**
+     * ce champ de type Position donne la position de l'apprenti
+     */
     private Position positionApprenti;
 
+    private ApprentiOrdonnateur apprenti = VBoxRoot.getApprenti();
+
+
+    /**
+     * ce champ de type Collection est une liste qui donne les temples du jeu
+     */
     private Collection<Temple> listTemple = new ArrayList<>();
 
     public VBoxCanvas() throws FileNotFoundException, ExceptionApprentiOrdonnateur {
@@ -42,7 +67,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
 
 //        les carrés
         graphicsContext2D.setStroke(COULEUR_GRILLE);
-        for (int i = 0; i < LARGEUR_CANVAS ; i += CARRE) {
+        for (int i = 0; i < LARGEUR_CANVAS; i += CARRE) {
             for (int j = 0; j < HAUTEUR_CANVAS; j += CARRE) {
                 graphicsContext2D.strokeRect(i, j, CARRE, CARRE);
             }
@@ -51,14 +76,14 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         int numCol = -15;
         graphicsContext2D.setFill(COULEUR_GRILLE);
         for (int i = CARRE; i < LARGEUR_CANVAS; i += CARRE) {
-            graphicsContext2D.fillText(Integer.toString(numCol), i+CARRE/3, CARRE/2);
+            graphicsContext2D.fillText(Integer.toString(numCol), i + CARRE / 3, CARRE / 2);
             numCol++;
         }
 //        les numuméros de ligne
         int numLigne = -15;
         graphicsContext2D.setFill(COULEUR_GRILLE);
         for (int i = CARRE; i < HAUTEUR_CANVAS; i += CARRE) {
-            graphicsContext2D.fillText(Integer.toString(numLigne), CARRE/3, i+CARRE/2);
+            graphicsContext2D.fillText(Integer.toString(numLigne), CARRE / 3, i + CARRE / 2);
             numLigne++;
         }
         System.out.println(listTemple);
@@ -68,7 +93,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         System.out.println(listTemple);
 
 //        Position apprenti
-        positionApprenti = ApprentiOrdonnateur.getPositionApprenti();
+        positionApprenti = apprenti.getPositionApprenti();
 //        imagePersonnage = new Image("F:\SAE\SAE 2.02 Exploration algorithmique\ApprentiOrdonnateur\SAE_2.02_Seraphin_Younes\Image\Sticker_Magicien.PNG");
 //        ImageView imageMag = new ImageView(imagePersonnage);
         graphicsContext2D.drawImage(imageMag.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
@@ -85,7 +110,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
             Position positionCliquee = new Position(abscisse, ordonnee);
 //            colorie la case selectionnée
             graphicsContext2D.setStroke(Color.RED);
-            graphicsContext2D.strokeRect(abscisse*CARRE, ordonnee*CARRE, CARRE, CARRE);
+            graphicsContext2D.strokeRect(abscisse * CARRE, ordonnee * CARRE, CARRE, CARRE);
             System.out.println(positionCliquee);
             deplacementAvecTimer(positionCliquee, positionApprenti);
         });
@@ -103,9 +128,11 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
 
     }
 //        Déplacement de l'apprenti
+
     /**
      * La méthode déplace l'apprenti vers la position de la case saisie en paramètre
-     * @param positionCliquee Position : position obtenu en cliquant sur une case
+     *
+     * @param positionCliquee  Position : position obtenu en cliquant sur une case
      * @param positionApprenti Position : position de l'apprenti
      */
     private void deplacementAvecTimer(Position positionCliquee, Position positionApprenti) {
@@ -140,7 +167,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
 
                         //  Redessiner le cristal du temple
                         graphicsContext2D.setFill(COULEUR_CRISTAL[temple.getCristal().getCoulCristal()]);
-                        graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
+                        graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse() * CARRE + 4, temple.getPosiTemple().getOrdonnee() * CARRE + 4, CARRE - 8, CARRE - 8);
                         break;
                     }
                 }
@@ -148,6 +175,7 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
                 // Déplacement du personnage
                 Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
                 positionApprenti.deplacementUneCase(positionCliquee);
+                apprenti.setPositionApprenti(positionCliquee);
                 ImageView imageMag = new ImageView(imagePersonnage);
 
                 // Dessin du personnage sur la nouvelle position
@@ -168,10 +196,69 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         timer.scheduleAtFixedRate(timerTask, 1000, 200);
     }
 
+    public void deplacement(List<Position> listPositions) {
+        int[] i = {0};
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                // Effacement de l'apprenti de la case à positionCourante
+                graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 2, positionApprenti.getOrdonnee() * CARRE + 2, CARRE - 3, CARRE - 3);
+                graphicsContext2D.setStroke(Color.BLACK);
+                graphicsContext2D.strokeRect(positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, CARRE, CARRE);
+
+                // Redessiner le temple sur la position effacée
+                for (Temple temple : listTemple) {
+                    if (positionApprenti.equals(temple.getPosiTemple())) {
+                        graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
+                        graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse() * CARRE + 1, temple.getPosiTemple().getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2);
+
+                        //  Redessiner le cristal du temple
+                        graphicsContext2D.setFill(COULEUR_CRISTAL[temple.getCristal().getCoulCristal()]);
+                        graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse() * CARRE + 4, temple.getPosiTemple().getOrdonnee() * CARRE + 4, CARRE - 8, CARRE - 8);
+                        break;
+                    }
+                }
+
+                // Déplacement du personnage
+                Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
+                positionApprenti.deplacementUneCase(listPositions.get(i[0]));
+                apprenti.setPositionApprenti(listPositions.get(i[0]));
+                ImageView imageMag = new ImageView(imagePersonnage);
+
+                // Réafficher l'apprenti sur la case à positionCible
+                 graphicsContext2D.drawImage(imageMag.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
+
+
+                Platform.runLater(() -> {
+                    labelNombreDePas.setText("Nombre de pas : " + Position.getNombreDePas());
+                });
+
+                // Si l'apprenti est arrivé à la position suivante, on incrémente i
+                if (positionApprenti.equals(listPositions.get(i[0]))) {
+                    VBoxRoot.getApprenti().echangeCristal();
+                    i[0]++;
+
+                    // Si l'apprenti est arrivé à la dernière position, on arrête le timer
+                    if (i[0] >= listPositions.size()) {
+                        timer.cancel();
+                    }
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 1000, 300);
+    }
+
+    /**
+     * Met à jour la liste des temples en supprimant les temples existants et en affichant les nouveaux temples sur le canvas.
+     *
+     * @param temples la nouvelle collection de temples à afficher.
+     */
     public void setTemples(Collection<Temple> temples) {
 //        supression des temples pré-existant (lors chgmt de scénario)
         for (Temple temple : listTemple) {
-            graphicsContext2D.clearRect(temple.getPosiTemple().getAbscisse() * CARRE+2, temple.getPosiTemple().getOrdonnee() * CARRE+2, CARRE-3, CARRE-3);
+            graphicsContext2D.clearRect(temple.getPosiTemple().getAbscisse() * CARRE + 2, temple.getPosiTemple().getOrdonnee() * CARRE + 2, CARRE - 3, CARRE - 3);
             if (positionApprenti.equals(temple.getPosiTemple())) {
                 Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
                 ImageView imageMag = new ImageView(imagePersonnage);
@@ -180,47 +267,35 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas{
         }
 //        affichage des nouveaux temples sur le canvas
         listTemple = temples;
-        for (Temple temple :listTemple) {
+        for (Temple temple : listTemple) {
             graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
-            graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
+            graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse() * CARRE + 1, temple.getPosiTemple().getOrdonnee() * CARRE + 1, CARRE - 2, CARRE - 2);
             graphicsContext2D.setFill(COULEUR_CRISTAL[temple.getCristal().getCoulCristal()]);
-            graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
+            graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse() * CARRE + 4, temple.getPosiTemple().getOrdonnee() * CARRE + 4, CARRE - 8, CARRE - 8);
 
         }
     }
 
+    /**
+     * l'accesseur getLabelNombreDePas permet d'avoir le nombre de pas du joueur
+     */
     public Label getLabelNombreDePas() {
         return labelNombreDePas;
     }
 
-    public void updateTemple(Position parPosiTemple, Cristal parCristal) {
-        for (Temple temple : listTemple) {
-            if (temple.getPosiTemple().equals(parPosiTemple)) {
-                temple.setCristal(parCristal);
-                graphicsContext2D.setFill(COULEUR_TEMPLE[temple.getCoulTemple()]);
-                graphicsContext2D.fillRect(temple.getPosiTemple().getAbscisse()*CARRE+1, temple.getPosiTemple().getOrdonnee()*CARRE+1, CARRE-2, CARRE-2);
-                graphicsContext2D.setFill(COULEUR_CRISTAL[temple.getCristal().getCoulCristal()]);
-                graphicsContext2D.fillOval(temple.getPosiTemple().getAbscisse()*CARRE+4, temple.getPosiTemple().getOrdonnee()*CARRE+4, CARRE-8, CARRE-8);
-                if (positionApprenti.equals(temple.getPosiTemple())) {
-                    Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
-                    ImageView imageMag = new ImageView(imagePersonnage);
-                    graphicsContext2D.drawImage(imageMag.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);
-                }
-            }
-        }
-    }
-
+    /** met à jour le nombre de pas à chaque mouvements de l'apprenti  */
     public void updateNbPas() {
         Position.setNombreDePasInit();
         labelNombreDePas.setText("Nombre de pas : " + Position.getNombreDePas());
     }
 
-    public void updateApprenti() {
+    /** la méthode updateApprenti  affiche la nouvelle position du joueur a chaque déplacements*/
+    public void updateApprenti(Position posiCible) {
         graphicsContext2D.clearRect(positionApprenti.getAbscisse() * CARRE + 2, positionApprenti.getOrdonnee() * CARRE + 2, CARRE - 3, CARRE - 3);
         graphicsContext2D.setStroke(Color.BLACK);
         graphicsContext2D.strokeRect(positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, CARRE, CARRE);
-        ApprentiOrdonnateur.setPositionApprenti(new Position((LARGEUR_CANVAS/CARRE)/2, (HAUTEUR_CANVAS/CARRE)/2));
-        positionApprenti = ApprentiOrdonnateur.getPositionApprenti();
+        positionApprenti = new Position(posiCible.getAbscisse(), posiCible.getOrdonnee());
+        apprenti.setPositionApprenti(posiCible);
         Image imagePersonnage = new Image("F:\\SAE\\SAE 2.02 Exploration algorithmique\\ApprentiOrdonnateur\\SAE_2.02_Seraphin_Younes\\Image\\Sticker_Magicien.PNG");
         ImageView imageMag = new ImageView(imagePersonnage);
         graphicsContext2D.drawImage(imageMag.getImage(), positionApprenti.getAbscisse() * CARRE, positionApprenti.getOrdonnee() * CARRE, LARGEUR_IMAGE_APP, HAUTEUR_IMAGE_APP);

@@ -22,6 +22,8 @@ public class Position implements Comparable {
         return nombreDePas;
     }
 
+
+/**  setteur qui definit le nombre de pas initial que la joueur a fait */
     public static void setNombreDePasInit() {
         nombreDePas = 0;
     }
@@ -34,21 +36,27 @@ public class Position implements Comparable {
      */
     public void deplacementUneCase(Position parPosition) {
         nombreDePas++;
-        if (this.abscisse > parPosition.abscisse) {
-            this.abscisse -= 1;
-            return;
+        if (parPosition.abscisse == 0 || parPosition.ordonnee == 0) {
+            System.out.println("deplacement impossible");
         }
-        if (this.abscisse < parPosition.abscisse) {
-            this.abscisse += 1;
-            return;
-        }
-        if (this.ordonnee > parPosition.ordonnee) {
-            this.ordonnee -= 1;
-            return;
-        }
-        if (this.ordonnee < parPosition.ordonnee) {
-            this.ordonnee += 1;
-            return;
+        else {
+            if (this.abscisse > parPosition.abscisse) {
+                this.abscisse -= 1;
+                return;
+            }
+
+            if (this.abscisse < parPosition.abscisse) {
+                this.abscisse += 1;
+                return;
+            }
+            if (this.ordonnee > parPosition.ordonnee) {
+                this.ordonnee -= 1;
+                return;
+            }
+            if (this.ordonnee < parPosition.ordonnee) {
+                this.ordonnee += 1;
+                return;
+            }
         }
     }
 
@@ -62,9 +70,25 @@ public class Position implements Comparable {
     }
 
     /**
-     * methode compareTo
-     * @param o
-     * @return
+     * Calcule la distance entre cette position et une autre position donnée.
+     *
+     * @param parPosition La position avec laquelle calculer la distance.
+     * @return La distance entre cette position et parPosition.
+     */
+    public double distance(Position parPosition) {
+        int deltaX = this.abscisse - parPosition.getAbscisse();
+        int deltaY = this.ordonnee - parPosition.getOrdonnee();
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+
+
+
+    /**
+     * Compare cet objet `Position` avec l'objet spécifié pour l'ordre.
+     *
+     * @param o l'objet à comparer.
+     * @return un entier négatif, zéro ou un entier positif selon que cette `Position`
+     * est moins que, égale à, ou plus grande que la `Position` spécifiée.
      */
     public int compareTo(Object o) {
         Position parPosition = (Position) o;
@@ -86,6 +110,13 @@ public class Position implements Comparable {
         return ordonnee;
     }
 
+
+
+    /**
+     * la methode toString renvoie une chaine de caractere qui decrit la position de l'apprenti
+     * avec son abcsisse et son ordonnée
+     * @return les coordonnées de l'apprenti
+     */
     public String toString() {
         String abscisseStr = String.valueOf(abscisse-16);
         String ordonneeStr = String.valueOf(ordonnee-16);

@@ -12,13 +12,22 @@ import modele.ExceptionApprentiOrdonnateur;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-
+/**
+ * Une classe représentant le conteneur VBox racine de l'interface utilisateur.
+ */
 public class VBoxRoot extends VBox implements ConstantesCanvas {
+    /** champ de type ApprentiOrdonnateur qui donne les informations de l'apprenti */
     private static ApprentiOrdonnateur apprenti;
+
+    /** champ de type Controleur qui donne les informations sur le controleur */
     private static Controleur controleur;
+
+    /** champ de type VBoxCanvas  */
     private static VBoxCanvas canvas;
 
+
     public VBoxRoot() {
+//      instanciation des champs apprenti et controleur
         apprenti = new ApprentiOrdonnateur();
         controleur = new Controleur();
 
@@ -48,13 +57,26 @@ public class VBoxRoot extends VBox implements ConstantesCanvas {
         this.getChildren().add(canvas);
     }
 
+    
+    /** accesseur qui retourne les informations de l'apprenti*/
     public static ApprentiOrdonnateur getApprenti() {
         return apprenti;
     }
 
+    /**
+     * Retourne l'instance actuelle du controleur.
+     *
+     * @return l'instance du controleur
+     */
     public static Controleur getControleur() {
         return controleur;
     }
+
+    /**
+     * Retourne l'instance actuelle du la classe VBoxCanvas.
+     *
+     * @return l'instance de VBoxCanvas
+     */
     public static VBoxCanvas getCanvas() {
         return canvas;
     }

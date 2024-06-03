@@ -30,20 +30,24 @@ public class Temple{
         return cristal;
     }
 
+
     /** accesseur qui retourne la position du temple */
     public Position getPosiTemple() {
         return posiTemple;
     }
+
 
     /** accesseur qui retourne la couleur du temple */
     public int getCoulTemple() {
         return coulTemple;
     }
 
+
     /** setteur qui defini le cristal */
     public void setCristal(Cristal parCristal) {
         cristal = parCristal;
     }
+
 
     /** setteur qui defini la couleur du cristal */
     public void setCoulCristal(Integer parCoulCristal) {
@@ -52,9 +56,9 @@ public class Temple{
 
 
     /** la méthode equals compare la couleur du temple (this) avec la couleur en paramètre*/
-    public boolean equalsCoul(int parCouleur) {
-        return this.getCoulTemple() == parCouleur;
-    }
+//    public boolean equalsCoul(int parCouleur) {
+//        return this.getCoulTemple() == parCouleur;
+//    }
 
 
     /** méthode toString qui donne comme information sur le temple : sa position, sa couleur et son cristal */

@@ -21,6 +21,7 @@ public class LectureScenario implements ConstantesCanvas{
      */
 
     public static Collection<Temple> lecture (File fichierScenario){
+        /** Une collection contenant les temples spécifiques à un scénario donné */
         Collection<Temple> templesDuScenario = new ArrayList<>();
         try{
             Scanner scanner = new Scanner(fichierScenario);

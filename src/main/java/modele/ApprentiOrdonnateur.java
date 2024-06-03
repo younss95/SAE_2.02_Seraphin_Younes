@@ -6,45 +6,91 @@ import vue.ConstantesCanvas;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * La classe `ApprentiOrdonnateur` représente un apprenti dans un jeu ou une simulation
+ * qui peut se déplacer et interagir avec des temples et un cristal.
+ */
 public class ApprentiOrdonnateur implements ConstantesCanvas {
-    private static Position positionApprenti;
+    // Position de l'apprenti
+    private Position positionApprenti;
+    // Collection des temples
     private Collection<Temple> listTemples = new ArrayList<>();
+    // Cristal de l'apprenti
     private Cristal cristal;
 
+    /**
+     * Constructeur par défaut qui initialise la position de l'apprenti et son cristal.
+     * La position initiale de l'apprenti est au centre du canvas.
+     */
     public ApprentiOrdonnateur(){
         positionApprenti = new Position((LARGEUR_CANVAS/CARRE)/2, (HAUTEUR_CANVAS/CARRE)/2);
         cristal = new Cristal(0);
     }
 
-//    public void echange() {
-//
-//    }
-
-
-//    Les trucs
+    /**
+     * Définit la liste des temples.
+     *
+     * @param temples une collection de temples à affecter.
+     */
     public void setTemples(Collection<Temple> temples) {
         listTemples = temples;
     }
 
-    public static void setPositionApprenti(Position parPosition) {
+    /**
+     * Définit la position de l'apprenti.
+     *
+     * @param parPosition la nouvelle position de l'apprenti.
+     */
+    public void setPositionApprenti(Position parPosition) {
         positionApprenti = parPosition;
     }
-//    Les accesseurs
-    public static Position getPositionApprenti() {
+
+    /**
+     * Obtient la position actuelle de l'apprenti.
+     *
+     * @return la position actuelle de l'apprenti.
+     */
+//    public Position getPositionApprenti() {
+//        return positionApprenti;
+//    }
+
+    public Position getPositionApprenti() {
         return positionApprenti;
     }
+
+    /**
+     * Obtient la liste des temples.
+     *
+     * @return une collection des temples.
+     */
     public Collection<Temple> getListTemples() {
         return listTemples;
     }
 
+    /**
+     * Retourne une représentation sous forme de chaîne de caractères de l'apprenti,
+     * incluant sa position et la liste des temples.
+     *
+     * @return une chaîne de caractères représentant l'apprenti.
+     */
     public String toString(){
         return "La position de l'apprenti : " + positionApprenti + " " + listTemples;
     }
 
+    /**
+     * Obtient le cristal de l'apprenti.
+     *
+     * @return le cristal de l'apprenti.
+     */
     public Cristal getCristal() {
         return cristal;
     }
 
+    /**
+     * Définit la couleur du cristal de l'apprenti.
+     *
+     * @param parCoulCristal la nouvelle couleur du cristal.
+     */
     public void setCoulCristal(Integer parCoulCristal) {
         cristal.setCoulCristal(parCoulCristal);
     }
@@ -58,10 +104,10 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
      */
     public void echangeCristal() {
         Temple templeApprenti = null;
-        for (Temple temple : this.getListTemples()) {
+        for (Temple temple : listTemples) {
             if (temple.getPosiTemple().equals(positionApprenti)) {
                 templeApprenti = temple;
-//                        break;
+                break;
             }
         }
 
@@ -93,3 +139,4 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
     }
 
 }
+

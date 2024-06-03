@@ -2,6 +2,9 @@ package vue;
 
 import javafx.scene.paint.Color;
 
+
+/**  intferace qui déclare les valeurs/constantes de notre jeu
+ * tel que les dimensions ou la couleur */
 public interface ConstantesCanvas {
     String INTITULE_MENU_SCENARIOS = "Scénario";
     Color COULEUR_GRILLE = Color.BLACK;
