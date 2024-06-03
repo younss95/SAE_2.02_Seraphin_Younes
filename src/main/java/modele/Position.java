@@ -110,6 +110,11 @@ public class Position implements Comparable {
         return ordonnee;
     }
 
+    /** setteur qui defini la position en abscisse  */
+    public void setAbscisse(int parAbscisse){abscisse = parAbscisse;}
+
+    /** setteur qui defini la position en ordonnee  */
+    public void setOrdonnee(int parOrdonnee){ordonnee = parOrdonnee;}
 
 
     /**
