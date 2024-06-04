@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>vue</OriginalElement>
+  <nodes>
+    <node x="-122.0" y="855.0235162374021">vue.ApprentiOrdonnateurApplication</node>
+    <node x="495.09910414333706" y="630.6002239641658">vue.VBoxAction</node>
+    <node x="-126.5" y="-13.5">vue.ConstantesCanvas</node>
+    <node x="-90.0" y="528.2698768197089">vue.VBoxRoot</node>
+    <node x="-623.560470324748" y="432.8538633818589">vue.VBoxCanvas</node>
+    <node x="392.33258678611435" y="364.01791713325866">vue.LectureScenario</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="vue.VBoxRoot" target="vue.ConstantesCanvas" relationship="REALIZATION">
+      <point x="-79.33333333333334" y="-62.0" />
+      <point x="-50.33333333333334" y="777.0" />
+      <point x="-171.0" y="777.0" />
+      <point x="-171.0" y="317.0" />
+      <point x="-11.0" y="317.0" />
+      <point x="-11.0" y="277.0" />
+      <point x="9.0" y="277.0" />
+      <point x="0.0" y="130.5" />
+    </edge>
+    <edge source="vue.ApprentiOrdonnateurApplication" target="vue.VBoxRoot" relationship="CREATE">
+      <point x="0.0" y="-27.0" />
+      <point x="0.0" y="62.0" />
+    </edge>
+    <edge source="vue.VBoxCanvas" target="vue.ConstantesCanvas" relationship="REALIZATION">
+      <point x="0.0" y="-96.5" />
+      <point x="-485.06047032474805" y="277.0" />
+      <point x="9.0" y="277.0" />
+      <point x="0.0" y="130.5" />
+    </edge>
+    <edge source="vue.VBoxRoot" target="vue.VBoxCanvas" relationship="TO_ONE">
+      <point x="79.33333333333334" y="-62.0" />
+      <point x="108.33333333333334" y="777.0" />
+      <point x="-415.81047032474805" y="777.0" />
+      <point x="69.25" y="96.5" />
+    </edge>
+    <edge source="vue.VBoxRoot" target="vue.VBoxCanvas" relationship="CREATE">
+      <point x="0.0" y="-62.0" />
+      <point x="29.0" y="777.0" />
+      <point x="-554.310470324748" y="777.0" />
+      <point x="-69.25" y="96.5" />
+    </edge>
+    <edge source="vue.LectureScenario" target="vue.ConstantesCanvas" relationship="REALIZATION">
+      <point x="0.0" y="-27.0" />
+      <point x="480.33258678611435" y="317.0" />
+      <point x="-11.0" y="317.0" />
+      <point x="-11.0" y="277.0" />
+      <point x="9.0" y="277.0" />
+      <point x="0.0" y="130.5" />
+    </edge>
+    <edge source="vue.ApprentiOrdonnateurApplication" target="vue.VBoxAction" relationship="CREATE">
+      <point x="0.0" y="-27.0" />
+      <point x="29.0" y="977.0" />
+      <point x="566.5991041433371" y="977.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.7847100175746925" showDependencies="true" x="45.0" y="549.0" />
+  <SelectedNodes>
+    <node>vue.LectureScenario</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
