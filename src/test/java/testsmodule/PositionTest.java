@@ -15,17 +15,17 @@ public class PositionTest {
     }
 
     @Test
-    public void testGetX() {
+    public void testGetAbscisse() {
         assertEquals(1, position.getAbscisse());
     }
 
     @Test
-    public void testGetY() {
+    public void testGetOrdonnee() {
         assertEquals(2, position.getOrdonnee());
     }
 
     @Test
-    public void testSetX() {
+    public void testSet() {
         position.setAbscisse(5);
         assertEquals(5, position.getAbscisse());
     }
