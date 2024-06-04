@@ -39,12 +39,6 @@ public class Controleur implements EventHandler, ConstantesCanvas {
 
             Button bouton = (Button) event.getSource();
 
-            // Vérifiez si le bouton cliqué est "Algo Tri"
-            if (bouton.getText().equals("Algo Tri")) {
-                System.out.println("bouton algo cliqué");
-                new AlgoTri();
-            }
-
             if (bouton.getText().equals("Tri Selection")) {
                 System.out.println("bouton tri selection cliqué");
                 ApprentiOrdonnateur apprenti = VBoxRoot.getApprenti();
@@ -58,7 +52,13 @@ public class Controleur implements EventHandler, ConstantesCanvas {
             }
             if (bouton.getText().equals("Algo Heuristique")) {
                 System.out.println("bouton algo heuristique cliqué");
-                new AlgoHeuristique();
+                ApprentiOrdonnateur apprentiOrdo = VBoxRoot.getApprenti();
+                AlgoHeuristique triHeuristique = new AlgoHeuristique((List<Temple>) apprentiOrdo.getListTemples());
+                List<Position> ordreVisite = triHeuristique.getOrdreVisite();
+
+                Position positionApprenti = apprentiOrdo.getPositionApprenti();
+                System.out.println(positionApprenti);
+                VBoxRoot.getCanvas().deplacement(ordreVisite);
             }
 
 
