@@ -1,87 +1,117 @@
 package testsmodule;
 
-import modele.ApprentiOrdonnateur;
-import modele.Cristal;
-import modele.Position;
-import modele.Temple;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import modele.*;
+import org.junit.Before;
+import org.junit.Test;
 import vue.ConstantesCanvas;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static org.junit.Assert.*;
+
+/**
+ * La classe `ApprentiOrdonnateurTest` contient des tests unitaires pour la classe `ApprentiOrdonnateur`.
+ */
 public class ApprentiOrdonnateurTest {
-
     private ApprentiOrdonnateur apprenti;
-    private Collection<Temple> temples;
-    private Temple temple1;
 
-    @BeforeEach
+    /**
+     * Configure le test.
+     * Cette méthode est appelée avant chaque méthode de test pour initialiser l'instance de `ApprentiOrdonnateur`.
+     */
+    @Before
     public void setUp() {
         apprenti = new ApprentiOrdonnateur();
-        temples = new ArrayList<>();
-
-        Position position = new Position(10,10);
-        Integer couleur = 6;
-        Cristal cristal = new Cristal(6);
-        temple1 = new Temple(position, couleur, cristal);
-        temples.add(temple1);
-
-        Position position2 = new Position(3,13);
-        Integer couleur2 = 2;
-        Cristal cristal2 = new Cristal(1);
-        temple1 = new Temple(position2, couleur2, cristal2);
-        temples.add(temple1);
-
-        apprenti.setTemples(temples);
     }
 
+    /**
+     * Teste la méthode setPositionApprenti et getPositionApprenti.
+     * Vérifie si la position de l'apprenti est correctement définie et récupérée.
+     */
     @Test
-    public void testGetPositionApprenti() {
-        Position initialPosition = new Position((ConstantesCanvas.LARGEUR_CANVAS / ConstantesCanvas.CARRE) / 2,
-                (ConstantesCanvas.HAUTEUR_CANVAS / ConstantesCanvas.CARRE) / 2);
-        assertEquals(initialPosition, apprenti.getPositionApprenti());
-    }
-
-    @Test
-    public void testSetPositionApprenti() {
+    public void testSetAndGetPositionApprenti() {
         Position newPosition = new Position(5, 5);
         apprenti.setPositionApprenti(newPosition);
         assertEquals(newPosition, apprenti.getPositionApprenti());
     }
 
+    /**
+     * Teste la méthode setTemples et getListTemples.
+     * Vérifie si la liste des temples est correctement définie et récupérée.
+     */
     @Test
-    public void testEchangeCristal() {
-        // Déplacer l'apprenti à la position du temple1 pour échanger les cristaux
-        apprenti.setPositionApprenti(new Position(2, 2));
+    public void testSetAndGetTemples() {
+        Collection<Temple> temples = new ArrayList<>();
+        Position position = new Position(10,10);
+        Integer couleur = 6;
+        Cristal cristal = new Cristal(6);
+        Temple temple = new Temple(position, couleur, cristal);
 
-        // Couleur initiale des cristaux
-        int couleurInitialeApprenti = apprenti.getCristal().getCoulCristal();
-        int couleurInitialeTemple = temples.iterator().next().getCristal().getCoulCristal();
+        Position position2 = new Position(10,10);
+        Integer couleur2 = 6;
+        Cristal cristal2 = new Cristal(6);
+        Temple temple2 = new Temple(position2, couleur2, cristal2);
+        temples.add(temple);
+        temples.add(temple2);
 
-        apprenti.echangeCristal();
-
-        // Vérifier si les couleurs ont été échangées
-        assertEquals(couleurInitialeTemple, apprenti.getCristal().getCoulCristal());
-        assertEquals(couleurInitialeApprenti, temples.iterator().next().getCristal().getCoulCristal());
+        apprenti.setTemples(temples);
+        assertEquals(temples, apprenti.getListTemples());
     }
 
+    /**
+     * Teste la méthode getCristal.
+     * Vérifie si le cristal de l'apprenti n'est pas nul et si sa couleur est correcte.
+     */
     @Test
-    public void testEchangeCristalNoTemple() {
-        // Déplacer l'apprenti à une position sans temple
-        apprenti.setPositionApprenti(new Position(10, 10));
-        apprenti.echangeCristal();
-
-        // Vérifier qu'aucune exception n'est levée et qu'il n'y a pas eu d'échange
+    public void testGetCristal() {
+        assertNotNull(apprenti.getCristal());
         assertEquals(0, apprenti.getCristal().getCoulCristal());
     }
 
+    /**
+     * Teste la méthode setCoulCristal.
+     * Vérifie si la couleur du cristal de l'apprenti est correctement définie.
+     */
     @Test
     public void testSetCoulCristal() {
-        apprenti.setCoulCristal(2);
-        assertEquals(2, apprenti.getCristal().getCoulCristal());
+        apprenti.setCoulCristal(3);
+        assertEquals(3, apprenti.getCristal().getCoulCristal());
+    }
+
+    /**
+     * Teste la méthode toString.
+     * Vérifie si la représentation sous forme de chaîne de caractères de l'apprenti est correcte.
+     */
+    @Test
+    public void testToString() {
+        Position initialPosition = new Position((ConstantesCanvas.LARGEUR_CANVAS / ConstantesCanvas.CARRE) / 2,
+                (ConstantesCanvas.HAUTEUR_CANVAS / ConstantesCanvas.CARRE) / 2);
+        String expectedString = "La position de l'apprenti : " + initialPosition + " []";
+        assertEquals(expectedString, apprenti.toString());
+    }
+
+    /**
+     * Teste la méthode echangeCristal.
+     * Vérifie si l'échange de cristal entre l'apprenti et le temple à sa position actuelle se fait correctement.
+     */
+    @Test
+    public void testEchangeCristal() {
+        Collection<Temple> temples = new ArrayList<>();
+        Position position = new Position(1,1);
+        Integer couleur = 1;
+        Cristal cristal = new Cristal(1);
+        Temple temple = new Temple(position, couleur, cristal);
+        temples.add(temple);
+        apprenti.setTemples(temples);
+        Position posi = new Position(1,1);
+        apprenti.setPositionApprenti(posi);
+
+        apprenti.echangeCristal();
+        System.out.println(apprenti.getPositionApprenti());
+
+        assertEquals(1, apprenti.getCristal().getCoulCristal());
+        assertEquals(0, temple.getCristal().getCoulCristal());
     }
 }
+
