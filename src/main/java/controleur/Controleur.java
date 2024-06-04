@@ -1,7 +1,6 @@
 package controleur;
 
 import algorithme.AlgoHeuristique;
-import algorithme.AlgoTri;
 import algorithme.AlgoTri_Selection;
 import javafx.event.Event;
 import javafx.event.EventHandler;
