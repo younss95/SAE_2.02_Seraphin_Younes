@@ -11,11 +11,13 @@ import java.util.Collection;
  * qui peut se déplacer et interagir avec des temples et un cristal.
  */
 public class ApprentiOrdonnateur implements ConstantesCanvas {
-    // Position de l'apprenti
+    /** Position de l'apprenti */
     private Position positionApprenti;
-    // Collection des temples
+
+    /** Collection des temples */
     private Collection<Temple> listTemples = new ArrayList<>();
-    // Cristal de l'apprenti
+
+    /** Cristal de l'apprenti */
     private Cristal cristal;
 
     /**

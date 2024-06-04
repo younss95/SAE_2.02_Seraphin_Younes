@@ -16,6 +16,10 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Cette classe implémente l'interface EventHandler et l'interface ConstantesCanvas.
+ * Elle gère les événements et les actions associées aux boutons et aux menus en jouant le role de syncrhonsier la vue et le modele
+ */
 public class Controleur implements EventHandler, ConstantesCanvas {
     @Override
     public void handle(Event event) {

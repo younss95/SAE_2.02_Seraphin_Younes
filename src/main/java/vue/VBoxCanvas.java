@@ -39,6 +39,9 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas {
      */
     private Position positionApprenti;
 
+    /**
+     * ApprentiOrdonnateur associé à ce VBoxCanvas.
+     */
     private ApprentiOrdonnateur apprenti = VBoxRoot.getApprenti();
 
 

@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 
-/** LA CLASSE PERMET DE LANCER L'APPLICATION */
+/** CETTE CLASSE PERMET DE LANCER L'APPLICATION */
 public class ApprentiOrdonnateurApplication extends Application {
     public void start(Stage stage) throws FileNotFoundException, ExceptionApprentiOrdonnateur {
 

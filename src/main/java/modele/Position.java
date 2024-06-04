@@ -102,10 +102,14 @@ public class Position implements Comparable {
             return 0;
         }
     }
-    //    les accesseurs nécessaires et la méthode toString()
+
+    /** accesseur qui retourne la position en abscisse */
     public int getAbscisse() {
         return abscisse;
     }
+
+    /** accesseur qui retourn la position en ordonnée.
+     */
     public int getOrdonnee() {
         return ordonnee;
     }
