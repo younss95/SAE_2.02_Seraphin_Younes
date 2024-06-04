@@ -121,6 +121,8 @@ public class ApprentiOrdonnateur implements ConstantesCanvas {
         Cristal cristalTemple = templeApprenti.getCristal();
 
         // Afficher les couleurs avant l'échange
+        System.out.println("------------------------------------------------------------");
+        System.out.println(" ");
         System.out.println("Avant l'echange :");
         System.out.println("Couleur Cristal Apprenti : " + COULEUR_CRISTAL[cristal.getCoulCristal()]);
         System.out.println("Couleur Cristal Temple : " + COULEUR_CRISTAL[cristalTemple.getCoulCristal()]);
