@@ -1,58 +1,87 @@
 package algorithme;
-
-import javafx.scene.canvas.Canvas;
 import modele.ApprentiOrdonnateur;
 import modele.Position;
 import modele.Temple;
+import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 import vue.VBoxCanvas;
 import vue.VBoxRoot;
-
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class AlgoTri_Selection {
+    List<Position> listePosTemple;
+    List<Position> listePos;
+    List<Integer> listeCristaux;
+    List<Integer> listeParcours;
+    List<Position> ordreVisite;
+    VBoxCanvas vue;
 
-    private ApprentiOrdonnateur apprenti;
-    private Collection<Position> ordreVisite;
 
-
-    public AlgoTri_Selection() {
-        System.out.println("Algo tri -> constructeur");
-        apprenti = VBoxRoot.getApprenti();
-        VBoxCanvas canvas = VBoxRoot.getCanvas();
-        Collection<Temple> temples = VBoxRoot.getApprenti().getListTemples();
-        Position posiApprenti = apprenti.getPositionApprenti();
+    public AlgoTri_Selection(List<Temple> listeTemple){
+        //l'apprenti se trouve en 16;16
+        ArrayList<Temple> listeTempleTriée = new ArrayList<>();
+        listePos = new ArrayList<Position>();
+        listeCristaux = new ArrayList<Integer>();
+        listeParcours = new ArrayList<>();
         ordreVisite = new ArrayList<>();
-        Collection<Temple> recherchePremier = new ArrayList<>(temples);
 
-        // Trouver le temple avec la couleur de cristal la plus basse
-        Temple templeMin = recherchePremier.stream().min(Comparator.comparingInt(Temple::getCoulTemple)).orElse(null); // à detailler
+        for(int i = 0; i < listeTemple.size(); i++){
+            System.out.println(listeTemple.get(i));
+            System.out.println(listeTemple.get(i).getCoulTemple());
+            int j=0;
+            while (listeTemple.get(j).getCoulTemple()!=i+1){
+                j++;
+            }
+            listeTempleTriée.add(listeTemple.get(j));
+        }
 
-        // Parcourir les temples pour les trier
-        while (!recherchePremier.isEmpty()) {
-            Temple prochainTemple = null;
-            int minCouleur = Integer.MAX_VALUE;
+        System.out.println(listeTempleTriée);
 
-            // Trouver le prochain temple avec la couleur de cristal la plus basse parmi les temples non triés
-            for (Temple temple : recherchePremier) {
-                if (temple.getCoulTemple() < minCouleur) {
-                    minCouleur = temple.getCoulTemple();
-                    prochainTemple = temple;
+        // instancie les listes
+        for (int i = 0; i < listeTempleTriée.size(); i++){
+            listePos.add(listeTempleTriée.get(i).getPosiTemple());
+            listeCristaux.add(listeTempleTriée.get(i).getCristal().getCoulCristal());
+        }
+        listePosTemple = listePos;
+
+        //l'algo
+        for (int i=0; i<listeCristaux.size()-1;i++){
+            int index = i;
+            for (int j = i + 1; j < listeCristaux.size(); j++)
+            {
+                if (listeCristaux.get(j) < listeCristaux.get(index)){
+                    index = j;
                 }
             }
-            // Supprimer le temple trié de la liste des temples restants
-            ordreVisite.add(prochainTemple.getPosiTemple());
-            recherchePremier.remove(prochainTemple);
-        }
-        // Retourner au premier temple visité pour déposer le dernier cristal
+            if (listeTempleTriée.get(index) != listeTempleTriée.get(i)){
+                listeParcours.add(index+1);
+                listeParcours.add(i+1);
+                listeParcours.add(index+1);
+                ordreVisite.add(listeTempleTriée.get(index).getPosiTemple());
+                ordreVisite.add(listeTempleTriée.get(i).getPosiTemple());
+                ordreVisite.add(listeTempleTriée.get(index).getPosiTemple());
 
-        ordreVisite.add(templeMin.getPosiTemple());
-        System.out.println(ordreVisite);
+
+                int min = listeCristaux.get(index);
+
+                listeCristaux.set(index,listeCristaux.get(i));
+                listeCristaux.set(i,min);
+            }
+
+        }
+//        ordreVisite.add(ordreVisite.get(ordreVisite.size()-1));
+
+        System.out.println("parcours : "+listeParcours);
+        System.out.println("parcours : "+ordreVisite);
+
+//        VBoxCanvas.deplacementEchange(listeParcoursPos);
+
     }
 
-    public Collection<Position> getOrdreVisite() {
+    public List<Position> getOrdreVisite() {
         return ordreVisite;
     }
+
 }
