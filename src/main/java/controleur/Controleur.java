@@ -31,6 +31,7 @@ public class Controleur implements EventHandler, ConstantesCanvas {
                 VBoxRoot.getCanvas().updateNbPas();
 //                VBoxRoot.getApprenti().setPositionApprenti(new Position((LARGEUR_CANVAS/CARRE)/2, (HAUTEUR_CANVAS/CARRE)/2));
                 VBoxRoot.getCanvas().updateApprenti(new Position((LARGEUR_CANVAS / CARRE) / 2, (HAUTEUR_CANVAS / CARRE) / 2));
+                VBoxRoot.getApprenti().setCoulCristal(0);
             }
         }
 
@@ -46,9 +47,10 @@ public class Controleur implements EventHandler, ConstantesCanvas {
 
             if (bouton.getText().equals("Tri Selection")) {
                 System.out.println("bouton tri selection cliqué");
-                AlgoTri_Selection triSelection = new AlgoTri_Selection();
-                List<Position> ordreVisite = (List<Position>) triSelection.getOrdreVisite();
                 ApprentiOrdonnateur apprenti = VBoxRoot.getApprenti();
+                AlgoTri_Selection triSelection = new AlgoTri_Selection((List<Temple>) apprenti.getListTemples());
+                List<Position> ordreVisite = triSelection.getOrdreVisite();
+
                 Position posiApprenti = apprenti.getPositionApprenti();
                 System.out.println(posiApprenti);
                 VBoxRoot.getCanvas().deplacement(ordreVisite);
