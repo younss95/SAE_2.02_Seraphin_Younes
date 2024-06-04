@@ -86,11 +86,11 @@ public class VBoxCanvas extends VBox implements ConstantesCanvas {
             graphicsContext2D.fillText(Integer.toString(numLigne), CARRE / 3, i + CARRE / 2);
             numLigne++;
         }
-        System.out.println(listTemple);
+//        System.out.println(listTemple);
 //        Placement des temples sur la map
 
 
-        System.out.println(listTemple);
+//        System.out.println(listTemple);
 
 //        Position apprenti
         positionApprenti = apprenti.getPositionApprenti();
