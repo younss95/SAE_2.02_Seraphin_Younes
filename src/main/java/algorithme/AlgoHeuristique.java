@@ -19,6 +19,7 @@ import java.util.List;
 public class AlgoHeuristique {
 
     private ApprentiOrdonnateur apprenti;
+    private List<Position> ordreVisite;
 
     /**
      * Construit une instance de la classe AlgoHeuristique.
@@ -27,8 +28,9 @@ public class AlgoHeuristique {
     public AlgoHeuristique() {
         System.out.println("Algo heuristique -> constructeur");
         apprenti = VBoxRoot.getApprenti();
+        ordreVisite = new ArrayList<>();
         Position posiApprenti = apprenti.getPositionApprenti();
-        List<Temple> temples = new ArrayList<>(VBoxRoot.getApprenti().getListTemples());
+        List<Temple> temples = new ArrayList<>(apprenti.getListTemples());
 //        System.out.println(temples);
 
         // Trier les temples par distance à l'apprenti (du plus proche au plus éloigné)
@@ -41,18 +43,14 @@ public class AlgoHeuristique {
         // Parcourir les temples et échanger les cristaux
         for (Temple temple : temples) {
             // Déplacer l'apprenti vers le temple
-            while (!posiApprenti.equals(temple.getPosiTemple())) {
-                posiApprenti.deplacementUneCase(temple.getPosiTemple());
-            }
+            ordreVisite.add(temple.getPosiTemple());
             // Vérifier si la couleur du cristal du temple correspond à celle du temple
             if (!temple.getCristal().equalsCoul(temple.getCoulTemple())) {
                 // Si ce n'est pas le cas, prendre le cristal du temple
                 if (!porteCristal) {
-                    apprenti.echangeCristal();
                     porteCristal = true;
                 } else {
                     // Sinon, échanger les cristaux
-                    apprenti.echangeCristal();
                 }
             }
         }
@@ -62,10 +60,7 @@ public class AlgoHeuristique {
             try {
                 Temple premierTemple = temples.get(0);
                 System.out.println("Apprenti retourne au premier temple visité à la position " + premierTemple.getPosiTemple());
-                while (!posiApprenti.equals(premierTemple.getPosiTemple())) {
-                    posiApprenti.deplacementUneCase(premierTemple.getPosiTemple());
-                }
-                apprenti.echangeCristal();
+                ordreVisite.add(premierTemple.getPosiTemple());
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
