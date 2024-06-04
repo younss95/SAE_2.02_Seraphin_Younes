@@ -23,7 +23,7 @@ public class Temple{
         coulTemple = parCoulTemple;
         cristal = parCristal;
     }
-    
+
 
     /** accesseur qui retourne le cristal */
     public Cristal getCristal() {
