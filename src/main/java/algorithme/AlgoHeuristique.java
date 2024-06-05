@@ -6,12 +6,29 @@ import modele.Temple;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Cette classe implémente un algorithme heuristique pour visiter une liste de temples.
+ * L'algorithme choisit le temple le plus proche de la position actuelle de l'apprenti
+ * et visite les temples en fonction de la couleur de leurs cristaux.
+ */
 public class AlgoHeuristique {
-
+    /**
+     * Liste ordonnée des positions visitées par l'apprenti.
+     */
     private List<Position> ordreVisite;
+    /**
+     * Liste des temples à visiter.
+     */
     private List<Temple> listTemples;
+    /**
+     * Position actuelle de l'apprenti.
+     */
     private Position positionApprenti;
 
+    /**
+     * Constructeur de la classe AlgoHeuristique.
+     * @param listeTemples Liste des temples à visiter.
+     */
     public AlgoHeuristique(List<Temple> listeTemples) {
         listTemples = listeTemples;
         ordreVisite = new ArrayList<>();
@@ -20,6 +37,9 @@ public class AlgoHeuristique {
         heuristique();
     }
 
+    /**
+     * Trie la liste des temples par couleur.
+     */
     private void trierTemplesParCouleur() {
         int n = listTemples.size();
         for (int i = 0; i < n - 1; i++) {
@@ -34,6 +54,9 @@ public class AlgoHeuristique {
         }
     }
 
+    /**
+     * Implémente l'algorithme heuristique pour visiter les temples.
+     */
     private void heuristique() {
         List<Integer> templesVisites = new ArrayList<>();
 
@@ -78,6 +101,12 @@ public class AlgoHeuristique {
         System.out.println("Parcours : " + ordreVisite);
     }
 
+    /**
+     * Trouve le temple le plus proche de la position spécifiée.
+     * @param position Position actuelle de l'apprenti.
+     * @param templesVisites Liste des indices des temples déjà visités.
+     * @return Le temple le plus proche de la position spécifiée.
+     */
     private Temple trouverTempleLePlusProche(Position position, List<Integer> templesVisites) {
         Temple templeLePlusProche = null;
         int distanceMinimale = Integer.MAX_VALUE;
@@ -87,8 +116,10 @@ public class AlgoHeuristique {
                 Temple temple = listTemples.get(i);
                 int distanceActuelle = distance(position, temple.getPosiTemple());
                 if (distanceActuelle < distanceMinimale) {
-                    distanceMinimale = distanceActuelle;
-                    templeLePlusProche = temple;
+                    if (temple.getCoulTemple() != temple.getCristal().getCoulCristal()) {
+                        distanceMinimale = distanceActuelle;
+                        templeLePlusProche = temple;
+                    }
                 }
             }
         }
@@ -96,6 +127,12 @@ public class AlgoHeuristique {
         return templeLePlusProche;
     }
 
+    /**
+     * Trouve le prochain temple à visiter en fonction de la couleur du cristal.
+     * @param couleurCristal Couleur du cristal actuel de l'apprenti.
+     * @param templesVisites Liste des indices des temples déjà visités.
+     * @return Le prochain temple à visiter, null s'il n'y en a pas.
+     */
     private Temple trouverTempleParCouleur(int couleurCristal, List<Integer> templesVisites) {
         for (int i = 0; i < listTemples.size(); i++) {
             if (!templesVisites.contains(i)) {
@@ -107,10 +144,21 @@ public class AlgoHeuristique {
         }
         return null;
     }
+
+    /**
+     * Calcule la distance entre deux positions.
+     * @param p1 Première position.
+     * @param p2 Deuxième position.
+     * @return La distance entre les deux positions.
+     */
     private int distance(Position p1, Position p2) {
         return Math.abs(p1.getAbscisse() - p2.getAbscisse()) + Math.abs(p1.getOrdonnee() - p2.getOrdonnee());
     }
 
+    /**
+     * Renvoie la liste ordonnée des positions visitées par l'apprenti.
+     * @return La liste ordonnée des positions visitées.
+     */
     public List<Position> getOrdreVisite() {
         return ordreVisite;
     }
