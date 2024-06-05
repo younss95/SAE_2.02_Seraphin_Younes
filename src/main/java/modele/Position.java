@@ -70,20 +70,6 @@ public class Position implements Comparable {
     }
 
     /**
-     * Calcule la distance entre cette position et une autre position donnée.
-     *
-     * @param parPosition La position avec laquelle calculer la distance.
-     * @return La distance entre cette position et parPosition.
-     */
-    public double distance(Position parPosition) {
-        int deltaX = this.abscisse - parPosition.getAbscisse();
-        int deltaY = this.ordonnee - parPosition.getOrdonnee();
-        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    }
-
-
-
-    /**
      * Compare cet objet `Position` avec l'objet spécifié pour l'ordre.
      *
      * @param o l'objet à comparer.
@@ -132,7 +118,4 @@ public class Position implements Comparable {
 
         return "(" + abscisseStr + ", " + ordonneeStr + ")";
     }
-
-
-
 }
